@@ -50,7 +50,7 @@ elif op == '4':
     else:
         print('Não foi possivel eliminar este animal.')
 
-elif op == '0':
+#elif op == '0':
     
 
 
