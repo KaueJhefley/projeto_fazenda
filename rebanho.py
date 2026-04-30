@@ -4,6 +4,8 @@ animais = []
 #opções 
 op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover Animal \n 0-retornar ao menu \n')
 
+index = -1
+
 if op == '1':
     tipo = input('Digite o tipo do animal: ')
     identificacao = input('Digite a identificação do animal: ')
@@ -50,7 +52,8 @@ elif op == '4':
     else:
         print('Não foi possivel eliminar este animal.')
 
-elif op == '0':
+#elif op == '0':
+#   break
     
 
 
