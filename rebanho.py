@@ -87,17 +87,17 @@ while op != '0':
                 print('Animal atualizado')
                 encontrado = True
                 break
-            else:
-                print('animal nao encontrado')
+        if not encontrado:
+            print('Animal não encontrado')
 
     elif op == '4':
-        atualizar = input('----Que tipo de animal deseja remover---- \n 1-bovino \n 2-suino \n 3-ave \n')
+        remover = input('----Que tipo de animal deseja remover---- \n 1-bovino \n 2-suino \n 3-ave \n')
         busca = input('Digite a identificação do animal: ')
-        if atualizar == '1':
+        if remover == '1':
                 lista = bovinos
-        elif atualizar == '2':
+        elif remover == '2':
             lista = suinos
-        elif atualizar == '3':
+        elif remover == '3':
             lista = aves
         else:
             print('Tipo inválido')
