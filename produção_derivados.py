@@ -1,5 +1,7 @@
 #Cadastrar a produção diária
 producao_leite = []
+#producao_derivados = []
+#leite_disponivel = 0
 
 #cadastrar produtos
 produtos = []

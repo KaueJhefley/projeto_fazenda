@@ -1,121 +1,89 @@
-#gerenciar rebanho
-animais = []
-bovinos = []
-suinos = []
-aves = []
-index = -99
-op = -99
-#opções 
-while op != '0':
-    op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover Animal \n 0-retornar ao menu \n')
+producao_leite = []
+producao_derivados = []
+leite_disponivel = 0
+
+produtos = []
+derivados = []
+
+while True:
+    op = input('\n ------O que deseja fazer?------ \n 1-Gerenciar leite e derivados \n 2-Gerenciar estoque geral \n 3-Verificar estoque geral \n 0-Retornar ao menu \n')
     if op == '1':
-        tipo = input('----Que tipo de animal deseja registrar---- \n 1-bovino \n 2-suino \n 3-ave \n')
-        
+        while True:
+            gerenciar_leite = input('\n ---Gerenciamento leite e derivados--- \n 1-Produção de leite \n 2-Produção de derivados \n 3-Historico da produção \n 0-Cancelar')
 
-        identificacao = input('Digite a identificação do animal: ')
-        status = input('Digite o Status do animal: ')
-        animal = [identificacao, status]
+            if gerenciar_leite == '1':
+               dia = input('Digite o dia atual: ')
+               litros = float(input('Digite a quantia ordenhada(L): '))
 
-        if tipo == '1':
-            lista = bovinos
-        elif tipo == '2':
-            lista = suinos
-        elif tipo == '3':
-            lista = aves
-        else:
-            print('Tipo inválido')
-            continue
+               atualizar_valor = [dia, litros]
+               producao_leite.append(atualizar_valor)
+               leite_disponivel = leite_disponivel + litros
 
-        existe = False
-        for a in lista:
-            if a[0] == identificacao:
-                existe = True
-                break
+               print('Produção cadastrada.')
+            
+            elif gerenciar_leite == '2':
+                while True:
+                    gerenciar_derivados = input('\n ----Gerenciar derivados---- \n 1-Registrar derivado \n 2-Produzir derivado \n 3-Status de produção \n 0-Cancelar \n ')
 
-        if existe:
-            print('Animal já existente')
-        else:
-            lista.append(animal)
-            print('Animal cadastrado')
+                    if gerenciar_derivados == '1':
+                        novo_derivado = input('Qual derivado deseja adicionar? \n (1)Queijo \n (2)Iogurte \n (3)Manteiga \n (0)Cancelar \n')
 
-    elif op == '2':
-        tipo = input('----Que tipo de animal deseja encontrar---- \n'
-                     '1-bovino \n'
-                     '2-suino \n'
-                     '3-ave \n')
+                        if novo_derivado == '1':
+                            categoria = 'Queijo'
+                            tipo = input('Qual tipo de queijo deseja adicionar? ')
+                            derivados.append([categoria, tipo])
+                        elif novo_derivado == '2':
+                            categoria = 'Iogurte'
+                            tipo = input('Qual sabor de iogurt deseja adicionar? ')
+                            derivados.append([categoria, tipo])
+                        elif novo_derivado == '3':
+                            categoria = 'Manteiga'
+                            tipo = input('Qual tipo de manteiga deseja adicionar? ')
+                            derivados.append([categoria, tipo])
+                        else:
+                            print('Retornando ao menu.')
 
-        busca = input('Digite a identificação do animal: ')
+                
+                    elif gerenciar_derivados == '2':
+                    
+                        print('\n ----Leite disponível---- \n ', leite_disponivel, 'Litros. \n')
+                        print("Derivados registrados:")
+                        for i in range(len(derivados)):
+                            print(f"({i+1}) {derivados[i][0]} {derivados[i][1]}")
+                        print('(0)Cancelar.')                    
+                        produzir = int(input('Qual derivado foi produzido? \n'))
 
-        if tipo == '1':
-                lista = bovinos
-        elif tipo == '2':
-            lista = suinos
-        elif tipo == '3':
-            lista = aves
-        else:
-            print('Tipo inválido')
-            continue
+                        if produzir == 0:
+                            print('Retornando ao menu.')
+                        else:
+                            indice = produzir - 1
+                            derivado_escolhido = derivados[indice]
 
-        encontrado = False
-        for a in lista:
-            if a[0] == busca:
-                print('Animal encontrado:', a)
-                encontrado = True
-                break
+                            quantidade_produzida = float(input('Qual a quantia produzida?(Kg ou L): '))
+                            gasto_leite = float(input('Quantos litros de leite foram gastos?(L): '))
+                            leite_disponivel -= gasto_leite
+                            producao_derivados.append([derivado_escolhido[0], derivado_escolhido[1], quantidade_produzida])
+                            print('Estoque atualizado com sucesso. \n Leite Gasto: ', gasto_leite, 'Litros \n Leite total: ', leite_disponivel, 'Litros')
 
-        if not encontrado:
-            print('Animal não encontrado')
-    elif op == '3':
-        atualizar = input('----Que tipo de animal deseja atualizar---- \n 1-bovino \n 2-suino \n 3-ave \n')
-        busca = input('Digite a identificação do animal: ')
-        if atualizar == '1':
-                lista = bovinos
-        elif atualizar == '2':
-            lista = suinos
-        elif atualizar == '3':
-            lista = aves
-        else:
-            print('Tipo inválido')
-            continue
-        
-        encontrado = False
-        for animal in lista:
-            if animal[0] == busca:
-                print('Animal encontrado:', animal)
-                novo_status = input('Digite o novo status: ')
-                animal[1] = novo_status
-                print('Animal atualizado')
-                encontrado = True
-                break
-        if not encontrado:
-            print('Animal não encontrado')
+                    elif gerenciar_derivados == '3':
+                        print(f'\nLeite disponível: {leite_disponivel} L\n')
 
-    elif op == '4':
-        remover = input('----Que tipo de animal deseja remover---- \n 1-bovino \n 2-suino \n 3-ave \n')
-        busca = input('Digite a identificação do animal: ')
-        if remover == '1':
-                lista = bovinos
-        elif remover == '2':
-            lista = suinos
-        elif remover == '3':
-            lista = aves
-        else:
-            print('Tipo inválido')
-            continue
-        encontrado = False
-        for animal in lista:
-            if animal[0] == busca:
-                print('Animal encontrado:', animal)
-                pergunta = input('Tem certeza que deseja remover esse animal? \n 1-sim \n 2-nao \n')
-                if pergunta == '1':
-                    lista.remove(animal)
-                    encontrado = True
-                    print('Animal removido')
-                    break
-        if not encontrado:
-            print('Animal não encontrado')
+                        if len(producao_derivados) == 0:
+                            print("Nenhum derivado produzido ainda.")
+                        else:
+                            print("Derivados disponíveis:")
+                            for item in producao_derivados:
+                                if item[0] == 'Iogurte':
+                                    unidade = 'L'
+                                else:
+                                    unidade = 'kg'
+                                    print(f"{item[0]} {item[1]}: {item[2]} {unidade}")
+                        
+
+                    elif gerenciar_leite == '0':
+                        break                            
+   
+    #elif op == '2':
+
 
     
-
-
-
