@@ -1,5 +1,4 @@
 #gerenciar rebanho
-animais = []
 bovinos = []
 suinos = []
 aves = []
@@ -7,14 +6,40 @@ index = -99
 op = -99
 #opções 
 while op != '0':
-    op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover Animal \n 0-retornar ao menu \n')
+    op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover \n 5-gerenciamento de lotes \n 0-retornar ao menu \n')
     if op == '1':
         tipo = input('----Que tipo de animal deseja registrar---- \n 1-bovino \n 2-suino \n 3-ave \n')
         
 
         identificacao = input('Digite a identificação do animal: ')
-        status = input('Digite o Status do animal: ')
-        animal = [identificacao, status]
+        status = input('Qual o status do animal\n1-saudavel\n2-prenha ou choca\n3-doente\n')
+        if status == '1':
+            status = 'saudavel'
+        elif status == '2':
+            status = 'prenha ou choca'
+        elif status == '3':
+            status = 'doente'
+        lote_op = input('Para qual lote o animal deve ir?\n1-Lote para venda \n2-lote para abate \n3-lote para producao de leite e derivados \n4-reproduçao\n5-tratamento\n')
+        if lote_op == '1':
+            lote = 'venda'
+        elif lote_op == '2':
+            lote = 'abate'
+        elif lote_op == '3':
+            lote = 'producao'
+        elif lote_op == '4':
+            lote = 'reproducao'
+        elif lote_op == '5':
+            lote = 'tratamento'
+        if status == 'prenha ou choca' and lote != 'reproducao':
+            print('Erro: animais prenha ou choca só podem ir para o lote de reprodução')
+            continue
+        if status == 'doente' and lote != 'tratamento':
+            print('Erro: animais doentes devem ir para o lote de tratamento')
+            continue
+        if status != 'doente' and lote == 'tratamento':
+            print('Erro: apenas animais doentes devem ir para o lote de tratamento')
+            continue
+        animal = [identificacao, status,lote]
 
         if tipo == '1':
             lista = bovinos
@@ -114,8 +139,35 @@ while op != '0':
                     break
         if not encontrado:
             print('Animal não encontrado')
+    elif op == '5':
+        gl = input('1 - Ver animais por lote\n2 - Mover animal de lote\n')
+        if gl == '1':
+            lote_busca = input('1-Lote para venda \n 2-lote para abate \n 3-lote para produçao de leite e derivados \n 4-lote para reproduçao \n 5-lote para tratamento\n')
+            if lote_busca == '1':
+                nome_lote = 'venda'
+            elif lote_busca == '2':
+                nome_lote = 'abate'
+            elif lote_busca == '3':
+                nome_lote = 'producao'
+            elif lote_busca == '4':
+                nome_lote = 'reproducao'
+            elif lote_busca == '5':
+                nome_lote = 'tratamento'
 
-    
+            else:
+                print('Lote inválido')
+                continue
+            print('----BOVINOS----')
+            for a in bovinos:
+                if a[2] == nome_lote:
+                    print(a)
 
+            print('---- SUINOS ----')
+            for a in suinos:
+                if a[2] == nome_lote:
+                    print(a)
 
-
+            print('---- AVES ----')
+            for a in aves:
+                if a[2] == nome_lote:
+                    print(a)
