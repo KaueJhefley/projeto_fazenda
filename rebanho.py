@@ -9,7 +9,15 @@ while op != '0':
     op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover \n 5-gerenciamento de lotes \n 0-retornar ao menu \n')
     if op == '1':
         tipo = input('----Que tipo de animal deseja registrar---- \n 1-bovino \n 2-suino \n 3-ave \n')
-        
+        if tipo == '1':
+            lista = bovinos
+        elif tipo == '2':
+            lista = suinos
+        elif tipo == '3':
+            lista = aves
+        else:
+            print('Tipo inválido')
+            continue
 
         identificacao = input('Digite a identificação do animal: ')
         status = input('Qual o status do animal\n1-saudavel\n2-prenha ou choca\n3-doente\n')
@@ -30,6 +38,9 @@ while op != '0':
             lote = 'reproducao'
         elif lote_op == '5':
             lote = 'tratamento'
+        else:
+            print('Lote inválido')
+            continue
         if status == 'prenha ou choca' and lote != 'reproducao':
             print('Erro: animais prenha ou choca só podem ir para o lote de reprodução')
             continue
@@ -40,16 +51,6 @@ while op != '0':
             print('Erro: apenas animais doentes devem ir para o lote de tratamento')
             continue
         animal = [identificacao, status,lote]
-
-        if tipo == '1':
-            lista = bovinos
-        elif tipo == '2':
-            lista = suinos
-        elif tipo == '3':
-            lista = aves
-        else:
-            print('Tipo inválido')
-            continue
 
         existe = False
         for a in lista:
@@ -107,11 +108,53 @@ while op != '0':
         for animal in lista:
             if animal[0] == busca:
                 print('Animal encontrado:', animal)
-                novo_status = input('Digite o novo status: ')
-                animal[1] = novo_status
-                print('Animal atualizado')
-                encontrado = True
-                break
+                novo_status = input('Qual o novo status do animal\n1-saudavel\n2-prenha ou choca\n3-doente\n ')
+
+                if novo_status == '1':
+                    status = 'saudavel'
+                elif novo_status == '2':
+                    status = 'prenha ou choca'
+                elif novo_status == '3':
+                    status = 'doente'
+                else:
+                    print('Status inválido')
+                    break
+
+                lote_op = input('Para qual lote o animal deve ir?\n1-Lote para venda \n2-lote para abate \n3-lote para producao de leite e derivados \n4-reproduçao\n5-tratamento\n')
+                if lote_op == '1':
+                    lote = 'venda'
+                elif lote_op == '2':
+                    lote = 'abate'
+                elif lote_op == '3':
+                    lote = 'producao'
+                elif lote_op == '4':
+                    lote = 'reproducao'
+                elif lote_op == '5':
+                    lote = 'tratamento'
+
+                else:
+                    print('Lote inválido')
+                    break
+            
+                if status == 'prenha ou choca' and lote != 'reproducao':
+                    print('Erro: animais prenha ou choca só podem ir para o lote de reprodução')
+                    encontrado = True
+                    break
+                if status == 'doente' and lote != 'tratamento':
+                    print('Erro: animais doentes devem ir para o lote de tratamento')
+                    encontrado = True
+                    break
+                if status != 'doente' and lote == 'tratamento':
+                    print('Erro: apenas animais doentes devem ir para o lote de tratamento')
+                    encontrado = True
+                    break
+            animal[1] = status
+            animal[2] = lote
+
+            print('Animal atualizado:', animal)
+            encontrado = True
+            break
+
         if not encontrado:
             print('Animal não encontrado')
 
@@ -140,8 +183,7 @@ while op != '0':
         if not encontrado:
             print('Animal não encontrado')
     elif op == '5':
-        gl = input('1 - Ver animais por lote\n2 - Mover animal de lote\n')
-        if gl == '1':
+        
             lote_busca = input('1-Lote para venda \n 2-lote para abate \n 3-lote para produçao de leite e derivados \n 4-lote para reproduçao \n 5-lote para tratamento\n')
             if lote_busca == '1':
                 nome_lote = 'venda'
