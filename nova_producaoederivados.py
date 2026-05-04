@@ -83,7 +83,10 @@ while True:
                     elif gerenciar_leite == '0':
                         break                            
    
-    #elif op == '2':
-
+    elif op == '2':
+        gerenciar_estoque = input('\n ----Gerenciamento de estoque---- \n 1-Gerenciar produto do rebanho \n 2-Atualizar estoque \n 3-Ver Estoque \n 0-Cancelar')
+        while True:
+            if gerenciar_estoque == '1':
+                registro_produto = input('\n ----Qual produto deseja registrar?---- \n (1)Carne \n (2)Ovos \n (3)Lã \n (0)Cancelar \n')
 
     
