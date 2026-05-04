@@ -10,7 +10,7 @@ while True:
 
     if op == '1':
         dia = input('Digite o dia atual: ')
-        litros = float(input('Digite a quantia ordenhada: '))
+        litros = float(input('Digite a quantia ordenhada(L): '))
 
         atualizar_valor = [dia, litros]
         producao_leite.append(atualizar_valor)
@@ -23,16 +23,16 @@ while True:
             
             if att_alimentos == '1':
                 produto = input('Qual produto deseja adicionar? ')
-                peso = float(input('Qual o peso do produto? '))
-                preço = float(input('Qual o preço do produto? '))
+                peso = float(input('Qual o peso do produto?(g) '))
+                preco = float(input('Qual o preço por Kg do produto? '))
 
-                alimento = [produto, peso, preço]
+                alimento = [produto, peso, preco]
                 produtos.append(alimento)
 
                 print('Produtos atualizados.')
 
             elif att_alimentos == '2':
-                busca = input('Digite o produto que deseja eliminar: ')
+                busca = input('Digite o produto que deseja remover: ')
                 index = -1
 
                 for i in range(len(produtos)):
@@ -44,7 +44,7 @@ while True:
                     produtos.pop(index)
                     print('Produto removido.')
                 else:
-                    print('Não foi possível eliminar este produto.')
+                    print('Não foi possível remover este produto.')
             
             elif att_alimentos == '3':
                 busca = input('Digite o alimento que deseja atualizar o preço: ')
