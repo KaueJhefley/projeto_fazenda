@@ -1,61 +1,243 @@
 #gerenciar rebanho
-animais = []
-
+bovinos = []
+suinos = []
+aves = []
+caprino = []
+ovino = []
+index = -99
+op = -99
 #opções 
-op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover Animal \n 0-retornar ao menu \n')
-
-index = -1
-
-if op == '1':
-    tipo = input('Digite o tipo do animal: ')
-    identificacao = input('Digite a identificação do animal: ')
-    status = input('Digite o Status do animal: ')
-
-    animal = [tipo, identificacao, status]
-    animais.append(animal)
-    
-    print('Animal Cadastrado.')
-
-elif op == '2':
-    busca = input('Digite o animal que deseja encontrar: ')
-    for i in range(len(animais)):
-        index = 1
-        print(index)
-        break
-
-elif op == '3':
-    busca = input('Digite a identificação que deseja atualizar:')
-    
-    for animal in animais:
-        if animal == busca:
-            print('Animal encontrado: ', animal)
-
-            novo_status = input('Digite o novo status: ')
-            animais[2] = novo_status
-
-            print('Animal Atualizado.')
-        
+while op != '0':
+    op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover \n 5-gerenciamento de lotes \n 0-retornar ao menu \n')
+    if op == '1':
+        tipo = input('----Que tipo de animal deseja registrar---- \n 1-bovino \n 2-suino \n 3-ave \n 4-caprino\n5-ovino')
+        if tipo == '1':
+            lista = bovinos
+        elif tipo == '2':
+            lista = suinos
+        elif tipo == '3':
+            lista = aves
+        elif tipo == '4':
+            lista = caprino
+        elif tipo == '5':
+            lista = ovino
         else:
-            print('Animal não encontrado: ')
+            print('Tipo inválido')
+            continue
 
-elif op == '4':
-    busca = input('Digite o animal que deseja eliminar: ')
-    for i in range(len(animais)):
-        if busca == animais[i]:
-            index = i
-            print(index)
+        identificacao = input('Digite a identificação do animal: ')
+        status = input('Qual o status do animal\n1-saudavel\n2-prenha ou choca\n3-doente\n')
+        if status == '1':
+            status = 'saudavel'
+        elif status == '2':
+            status = 'prenha ou choca'
+        elif status == '3':
+            status = 'doente'
+        lote_op = input('Para qual lote o animal deve ir?\n1-Lote para venda \n2-lote para abate \n3-lote para producao de leite e derivados \n4-reproduçao\n5-tratamento\n')
+        if lote_op == '1':
+            lote = 'venda'
+        elif lote_op == '2':
+            lote = 'abate'
+        elif lote_op == '3':
+            lote = 'producao'
+        elif lote_op == '4':
+            lote = 'reproducao'
+        elif lote_op == '5':
+            lote = 'tratamento'
+        else:
+            print('Lote inválido')
+            continue
+        if status == 'prenha ou choca' and lote != 'reproducao':
+            print('Erro: animais prenha ou choca só podem ir para o lote de reprodução')
+            continue
+        if status == 'doente' and lote != 'tratamento':
+            print('Erro: animais doentes devem ir para o lote de tratamento')
+            continue
+        if status != 'doente' and lote == 'tratamento':
+            print('Erro: apenas animais doentes devem ir para o lote de tratamento')
+            continue
+        animal = [identificacao, status,lote]
+
+        existe = False
+        for a in lista:
+            if a[0] == identificacao:
+                existe = True
+                break
+
+        if existe:
+            print('Animal já existente')
+        else:
+            lista.append(animal)
+            print('Animal cadastrado')
+
+    elif op == '2':
+        tipo = input('----Que tipo de animal deseja encontrar---- \n'
+                     '1-bovino \n'
+                     '2-suino \n'
+                     '3-ave \n'
+                     '4-caprino \n'
+                     '5-ovino\n')
+
+        busca = input('Digite a identificação do animal: ')
+
+        if tipo == '1':
+                lista = bovinos
+        elif tipo == '2':
+            lista = suinos
+        elif tipo == '3':
+            lista = aves
+        elif tipo == '4':
+            lista = caprino
+        elif tipo == '5':
+            lista = ovino
+        else:
+            print('Tipo inválido')
+            continue
+
+        encontrado = False
+        for a in lista:
+            if a[0] == busca:
+                print('Animal encontrado:', a)
+                encontrado = True
+                break
+
+        if not encontrado:
+            print('Animal não encontrado')
+    elif op == '3':
+        atualizar = input('----Que tipo de animal deseja atualizar---- \n 1-bovino \n 2-suino \n 3-ave \n4-caprino\n5-ovino')
+        busca = input('Digite a identificação do animal: ')
+        if atualizar == '1':
+                lista = bovinos
+        elif atualizar == '2':
+            lista = suinos
+        elif atualizar == '3':
+            lista = aves
+        elif atualizar == '4':
+            lista = caprino
+        elif atualizar == '5':
+            lista = ovino
+        else:
+            print('Tipo inválido')
+            continue
+        
+        encontrado = False
+        for animal in lista:
+            if animal[0] == busca:
+                print('Animal encontrado:', animal)
+                novo_status = input('Qual o novo status do animal\n1-saudavel\n2-prenha ou choca\n3-doente\n ')
+
+                if novo_status == '1':
+                    status = 'saudavel'
+                elif novo_status == '2':
+                    status = 'prenha ou choca'
+                elif novo_status == '3':
+                    status = 'doente'
+                else:
+                    print('Status inválido')
+                    break
+
+                lote_op = input('Para qual lote o animal deve ir?\n1-Lote para venda \n2-lote para abate \n3-lote para producao de leite e derivados \n4-reproduçao\n5-tratamento\n')
+                if lote_op == '1':
+                    lote = 'venda'
+                elif lote_op == '2':
+                    lote = 'abate'
+                elif lote_op == '3':
+                    lote = 'producao'
+                elif lote_op == '4':
+                    lote = 'reproducao'
+                elif lote_op == '5':
+                    lote = 'tratamento'
+
+                else:
+                    print('Lote inválido')
+                    break
+            
+                if status == 'prenha ou choca' and lote != 'reproducao':
+                    print('Erro: animais prenha ou choca só podem ir para o lote de reprodução')
+                    encontrado = True
+                    break
+                if status == 'doente' and lote != 'tratamento':
+                    print('Erro: animais doentes devem ir para o lote de tratamento')
+                    encontrado = True
+                    break
+                if status != 'doente' and lote == 'tratamento':
+                    print('Erro: apenas animais doentes devem ir para o lote de tratamento')
+                    encontrado = True
+                    break
+            animal[1] = status
+            animal[2] = lote
+
+            print('Animal atualizado:', animal)
+            encontrado = True
             break
-    if index >= 0:
-        animais.pop(index)
-        print('Animal Removido.')
-    
-    else:
-        print('Não foi possivel eliminar este animal.')
 
-#elif op == '0':
-#   break
-    
+        if not encontrado:
+            print('Animal não encontrado')
 
+    elif op == '4':
+        remover = input('----Que tipo de animal deseja remover---- \n 1-bovino \n 2-suino \n 3-ave \n4-caprino\n5-ovnio')
+        busca = input('Digite a identificação do animal: ')
+        if remover == '1':
+                lista = bovinos
+        elif remover == '2':
+            lista = suinos
+        elif remover == '3':
+            lista = aves
+        elif remover == '4':
+            lista = caprino
+        elif remover == '5':
+            lista = ovino
+        else:
+            print('Tipo inválido')
+            continue
+        encontrado = False
+        for animal in lista:
+            if animal[0] == busca:
+                print('Animal encontrado:', animal)
+                pergunta = input('Tem certeza que deseja remover esse animal? \n 1-sim \n 2-nao \n')
+                if pergunta == '1':
+                    lista.remove(animal)
+                    encontrado = True
+                    print('Animal removido')
+                    break
+        if not encontrado:
+            print('Animal não encontrado')
+    elif op == '5':
+        
+            lote_busca = input('1-Lote para venda \n 2-lote para abate \n 3-lote para produçao de leite e derivados \n 4-lote para reproduçao \n 5-lote para tratamento\n')
+            if lote_busca == '1':
+                nome_lote = 'venda'
+            elif lote_busca == '2':
+                nome_lote = 'abate'
+            elif lote_busca == '3':
+                nome_lote = 'producao'
+            elif lote_busca == '4':
+                nome_lote = 'reproducao'
+            elif lote_busca == '5':
+                nome_lote = 'tratamento'
 
+            else:
+                print('Lote inválido')
+                continue
+            print('----BOVINOS----')
+            for a in bovinos:
+                if a[2] == nome_lote:
+                    print(a)
 
+            print('---- SUINOS ----')
+            for a in suinos:
+                if a[2] == nome_lote:
+                    print(a)
 
+            print('---- AVES ----')
+            for a in aves:
+                if a[2] == nome_lote:
+                    print(a)
+            print('---- CAPRINO ----')
+            for a in caprino:
+                if a[2] == nome_lote:
+                    print(a)
+            print('---- OVINO ----')
+            for a in ovino:
+                if a[2] == nome_lote:
+                    print(a)
