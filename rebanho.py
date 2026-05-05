@@ -2,19 +2,25 @@
 bovinos = []
 suinos = []
 aves = []
+caprino = []
+ovino = []
 index = -99
 op = -99
 #opções 
 while op != '0':
     op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover \n 5-gerenciamento de lotes \n 0-retornar ao menu \n')
     if op == '1':
-        tipo = input('----Que tipo de animal deseja registrar---- \n 1-bovino \n 2-suino \n 3-ave \n')
+        tipo = input('----Que tipo de animal deseja registrar---- \n 1-bovino \n 2-suino \n 3-ave \n 4-caprino\n5-ovino')
         if tipo == '1':
             lista = bovinos
         elif tipo == '2':
             lista = suinos
         elif tipo == '3':
             lista = aves
+        elif tipo == '4':
+            lista = caprino
+        elif tipo == '5':
+            lista = ovino
         else:
             print('Tipo inválido')
             continue
@@ -68,7 +74,9 @@ while op != '0':
         tipo = input('----Que tipo de animal deseja encontrar---- \n'
                      '1-bovino \n'
                      '2-suino \n'
-                     '3-ave \n')
+                     '3-ave \n'
+                     '4-caprino \n'
+                     '5-ovino\n')
 
         busca = input('Digite a identificação do animal: ')
 
@@ -78,6 +86,10 @@ while op != '0':
             lista = suinos
         elif tipo == '3':
             lista = aves
+        elif tipo == '4':
+            lista = caprino
+        elif tipo == '5':
+            lista = ovino
         else:
             print('Tipo inválido')
             continue
@@ -92,7 +104,7 @@ while op != '0':
         if not encontrado:
             print('Animal não encontrado')
     elif op == '3':
-        atualizar = input('----Que tipo de animal deseja atualizar---- \n 1-bovino \n 2-suino \n 3-ave \n')
+        atualizar = input('----Que tipo de animal deseja atualizar---- \n 1-bovino \n 2-suino \n 3-ave \n4-caprino\n5-ovino')
         busca = input('Digite a identificação do animal: ')
         if atualizar == '1':
                 lista = bovinos
@@ -100,6 +112,10 @@ while op != '0':
             lista = suinos
         elif atualizar == '3':
             lista = aves
+        elif atualizar == '4':
+            lista = caprino
+        elif atualizar == '5':
+            lista = ovino
         else:
             print('Tipo inválido')
             continue
@@ -159,7 +175,7 @@ while op != '0':
             print('Animal não encontrado')
 
     elif op == '4':
-        remover = input('----Que tipo de animal deseja remover---- \n 1-bovino \n 2-suino \n 3-ave \n')
+        remover = input('----Que tipo de animal deseja remover---- \n 1-bovino \n 2-suino \n 3-ave \n4-caprino\n5-ovnio')
         busca = input('Digite a identificação do animal: ')
         if remover == '1':
                 lista = bovinos
@@ -167,6 +183,10 @@ while op != '0':
             lista = suinos
         elif remover == '3':
             lista = aves
+        elif remover == '4':
+            lista = caprino
+        elif remover == '5':
+            lista = ovino
         else:
             print('Tipo inválido')
             continue
@@ -211,5 +231,13 @@ while op != '0':
 
             print('---- AVES ----')
             for a in aves:
+                if a[2] == nome_lote:
+                    print(a)
+            print('---- CAPRINO ----')
+            for a in caprino:
+                if a[2] == nome_lote:
+                    print(a)
+            print('---- OVINO ----')
+            for a in ovino:
                 if a[2] == nome_lote:
                     print(a)
