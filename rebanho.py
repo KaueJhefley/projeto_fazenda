@@ -164,18 +164,18 @@ while op != '0':
                     print('Erro: apenas animais doentes devem ir para o lote de tratamento')
                     encontrado = True
                     break
-            animal[1] = status
-            animal[2] = lote
+                animal[1] = status
+                animal[2] = lote
 
-            print('Animal atualizado:', animal)
-            encontrado = True
-            break
+                print('Animal atualizado:', animal)
+                encontrado = True
+                break
 
         if not encontrado:
             print('Animal não encontrado')
 
     elif op == '4':
-        remover = input('----Que tipo de animal deseja remover---- \n 1-bovino \n 2-suino \n 3-ave \n4-caprino\n5-ovnio')
+        remover = input('----Que tipo de animal deseja remover---- \n 1-bovino \n 2-suino \n 3-ave \n4-caprino\n5-ovino')
         busca = input('Digite a identificação do animal: ')
         if remover == '1':
                 lista = bovinos
