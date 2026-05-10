@@ -16,6 +16,7 @@ derivados = []
 produtos = []
 receitas = []
 despesas = []
+maquinas = []
 saldo = 0
 op = -99
 index = -99
@@ -616,6 +617,13 @@ while menu != 0:
                                     print(f'{d[0]} - R$ {d[1]} - {d[2]}')
                             elif financeiro == '0':
                                 break
+
+                #    elif menu_adm == '4':
+                #        op_maquina = input('\n ------GERENCIAMENTO DE MAQUINAS------ \n 1-Registrar Maquina \n  2-Atualizar Maquinas 3-Ver Maquinas \n 0-Cancelar \n')
+                #
+                #        if op_maquina == '1':
+
+
             else:
                 print('senha invalida')
 
