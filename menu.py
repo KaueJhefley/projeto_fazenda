@@ -622,6 +622,9 @@ while menu != 0:
                 #        op_maquina = input('\n ------GERENCIAMENTO DE MAQUINAS------ \n 1-Registrar Maquina \n  2-Atualizar Maquinas 3-Ver Maquinas \n 0-Cancelar \n')
                 #
                 #        if op_maquina == '1':
+                #        elif op_maquina == '2':
+                #        elif op_maquina == '3':
+                #        elif op_maquina == '0':   
 
 
             else:
