@@ -26,7 +26,7 @@ while True:
         print('----Receitas----')
         for r in receitas:
             print(f'{r[0]} - R$ {r[1]} - {r[2]}')
-            print('----Despesas----')
+        print('----Despesas----')
         for d in despesas:
             print(f'{d[0]} - R$ {d[1]} - {d[2]}')
     elif financeiro == '0':
