@@ -610,7 +610,7 @@ while menu != 0:
                     historico = []
                     avaliaçoes = []
                     while True:
-                        menu_cliente = input('----Menu Cliente----\n 1-visulizar estoque disponivel \n 2-realizar compra\n 3-agendar transporte\n 4-historico de compra\n 5-simular frete\n')
+                        menu_cliente = input('----Menu Cliente----\n 1-visulizar estoque disponivel \n 2-realizar compra\n 3-agendar transporte\n 4-historico de compra\n')
                         if menu_cliente == '1':
                             while True:
                                 opv_estoque = input('\n ----ESTOQUE DISPONIVEL---- \n 1-Leite e derivados \n 2-Animais \n 3-Produtos \n 0-Retornar ao menu \n')
@@ -858,8 +858,8 @@ while menu != 0:
                                             agendamentos.pop(excluir_agendamento - 1)
                                             print('Agendamento cancelado com sucesso.')
 
-                                        if menu_agendamento == '0':
-                                            break            
+                                if menu_agendamento == '0':
+                                    break            
                         elif menu_cliente =='4':
                             print('----HISTORICO DE COMPRAS----')
                             encontrou = False
