@@ -11,11 +11,12 @@ ovino = []
 producao_leite = []
 producao_derivados = []
 leite_disponivel = 0
+preco_leite = 0
 derivados = []
 produtos = []
 receitas = []
 despesas = []
-
+agendamentos = []
 saldo = 0
 op = -99
 index = -99
@@ -37,65 +38,65 @@ while menu != 0:
                         while op != '0':
                             op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover \n 5-gerenciamento de lotes \n 0-retornar ao menu \n')
                             if op == '1':
-                                    tipo = input('----Que tipo de animal deseja registrar---- \n 1-bovino \n 2-suino \n 3-ave \n 4-caprino\n5-ovino')
-                                    if tipo == '1':
-                                        lista = bovinos
-                                    elif tipo == '2':
-                                        lista = suinos
-                                    elif tipo == '3':
-                                        lista = aves
-                                    elif tipo == '4':
-                                        lista = caprino
-                                    elif tipo == '5':
-                                        lista = ovino
-                                    else:
-                                        print('Tipo inválido')
-                                        continue
+                                tipo = input('----Que tipo de animal deseja registrar---- \n 1-bovino \n 2-suino \n 3-ave \n 4-caprino\n5-ovino')
+                                if tipo == '1':
+                                    lista = bovinos
+                                elif tipo == '2':
+                                    lista = suinos
+                                elif tipo == '3':
+                                    lista = aves
+                                elif tipo == '4':
+                                    lista = caprino
+                                elif tipo == '5':
+                                    lista = ovino
+                                else:
+                                    print('Tipo inválido')
+                                    continue
 
-                                    identificacao = input('Digite a identificação do animal: ')
-                                    status = input('Qual o status do animal\n1-saudavel\n2-prenha ou choca\n3-doente\n')
-                                    if status == '1':
-                                        status = 'saudavel'
-                                    elif status == '2':
-                                        status = 'prenha ou choca'
-                                    elif status == '3':
-                                        status = 'doente'
-                                    lote_op = input('Para qual lote o animal deve ir?\n1-Lote para venda \n2-lote para abate \n3-lote para producao de leite e derivados \n4-reproduçao\n5-tratamento\n')
-                                    if lote_op == '1':
-                                        lote = 'venda'
-                                    elif lote_op == '2':
-                                        lote = 'abate'
-                                    elif lote_op == '3':
-                                        lote = 'producao'
-                                    elif lote_op == '4':
-                                        lote = 'reproducao'
-                                    elif lote_op == '5':
-                                        lote = 'tratamento'
-                                    else:
-                                        print('Lote inválido')
-                                        continue
-                                    if status == 'prenha ou choca' and lote != 'reproducao':
-                                        print('Erro: animais prenha ou choca só podem ir para o lote de reprodução')
-                                        continue
-                                    if status == 'doente' and lote != 'tratamento':
-                                        print('Erro: animais doentes devem ir para o lote de tratamento')
-                                        continue
-                                    if status != 'doente' and lote == 'tratamento':
-                                        print('Erro: apenas animais doentes devem ir para o lote de tratamento')
-                                        continue
-                                    animal = [identificacao, status,lote]
+                                identificacao = input('Digite a identificação do animal: ')
+                                status = input('Qual o status do animal\n1-saudavel\n2-prenha ou choca\n3-doente\n')
+                                if status == '1':
+                                    status = 'saudavel'
+                                elif status == '2':
+                                    status = 'prenha ou choca'
+                                elif status == '3':
+                                    status = 'doente'
+                                lote_op = input('Para qual lote o animal deve ir?\n1-Lote para venda \n2-lote para abate \n3-lote para producao de leite e derivados \n4-reproduçao\n5-tratamento\n')
+                                if lote_op == '1':
+                                    lote = 'venda'
+                                elif lote_op == '2':
+                                    lote = 'abate'
+                                elif lote_op == '3':
+                                    lote = 'producao'
+                                elif lote_op == '4':
+                                    lote = 'reproducao'
+                                elif lote_op == '5':
+                                    lote = 'tratamento'
+                                else:
+                                    print('Lote inválido')
+                                    continue
+                                if status == 'prenha ou choca' and lote != 'reproducao':
+                                    print('Erro: animais prenha ou choca só podem ir para o lote de reprodução')
+                                    continue
+                                if status == 'doente' and lote != 'tratamento':
+                                    print('Erro: animais doentes devem ir para o lote de tratamento')
+                                    continue
+                                if status != 'doente' and lote == 'tratamento':
+                                    print('Erro: apenas animais doentes devem ir para o lote de tratamento')
+                                    continue
+                                animal = [identificacao, status,lote]
 
-                                    existe = False
-                                    for a in lista:
-                                        if a[0] == identificacao:
-                                            existe = True
-                                            break
+                                existe = False
+                                for a in lista:
+                                    if a[0] == identificacao:
+                                        existe = True
+                                        break
 
-                                    if existe:
-                                        print('Animal já existente')
-                                    else:
-                                        lista.append(animal)
-                                        print('Animal cadastrado')
+                                if existe:
+                                    print('Animal já existente')
+                                else:
+                                    lista.append(animal)
+                                    print('Animal cadastrado')
 
                             elif op == '2':
                                 tipo = input('----Que tipo de animal deseja encontrar---- \n'
@@ -268,13 +269,12 @@ while menu != 0:
                                     for a in ovino:
                                         if a[2] == nome_lote:
                                             print(a)
-                                        
                     elif menu_adm  == '2':
                         while True:
                             op_produçao = input('\n ------O que deseja fazer?------ \n 1-Gerenciar leite e derivados \n 2-Gerenciar estoque geral \n 3-Verificar estoque geral \n 0-Retornar ao menu \n')
                             if op_produçao == '1':
                                 while True:
-                                    gerenciar_leite = input('\n ---Gerenciamento leite e derivados--- \n 1-Produção de leite \n 2-Produção de derivados \n 3-Gerenciar Preços \n 0-Cancelar\n')
+                                    gerenciar_leite = input('\n ---Gerenciamento leite e derivados--- \n 1-Produção de leite \n 2-Produção de derivados \n 3-Historico da produção \n 0-Cancelar\n')
 
                                     if gerenciar_leite == '1':
                                         dia = input('Digite o dia atual: ')
@@ -294,18 +294,18 @@ while menu != 0:
                                                 if novo_derivado == '1':
                                                     categoria = 'Queijo'
                                                     tipo = input('Qual tipo de queijo deseja adicionar? ')
-                                                    preco = float(input('Digite o preço: '))
-                                                    derivados.append([categoria, tipo, preco])
+                                                    preco_derivado = float(input('Qual será o preço por Kg?'))
+                                                    derivados.append([categoria, tipo, preco_derivado])
                                                 elif novo_derivado == '2':
                                                     categoria = 'Iogurte'
                                                     tipo = input('Qual sabor de iogurt deseja adicionar? ')
-                                                    preco = float(input('Digite o preço: '))
-                                                    derivados.append([categoria, tipo, preco])
+                                                    preco_derivado = float(input('Qual sera o preço por litro? '))
+                                                    derivados.append([categoria, tipo, preco_derivado])
                                                 elif novo_derivado == '3':
                                                     categoria = 'Manteiga'
                                                     tipo = input('Qual tipo de manteiga deseja adicionar? ')
-                                                    preco = float(input('Digite o preço: '))
-                                                    derivados.append([categoria, tipo, preco])
+                                                    preco_derivado = float(input('Qual será o preço do produto? '))
+                                                    derivados.append([categoria, tipo, preco_derivado])
                                                 else:
                                                     print('Retornando ao menu.')
 
@@ -318,7 +318,7 @@ while menu != 0:
                                                     print('Nenhum derivado cadastrado.')
                                                     continue
                                                 for i in range(len(derivados)):
-                                                    print(f"({i+1}) {derivados[i][0]} {derivados[i][1]}")
+                                                    print(f"({i+1}) {derivados[i][0]} {derivados[i][1]} | R${derivados[i][2]}")
                                                 print('(0)Cancelar.')                    
                                                 produzir = int(input('Qual derivado foi produzido? \n'))
                                                 if produzir == 0:
@@ -337,7 +337,7 @@ while menu != 0:
                                                         continue
                                                     else:
                                                         leite_disponivel -= gasto_leite
-                                                        producao_derivados.append([derivado_escolhido[0], derivado_escolhido[1], quantidade_produzida])
+                                                        producao_derivados.append([derivado_escolhido[0], derivado_escolhido[1], quantidade_produzida, derivado_escolhido[2]])
                                                         print('Estoque atualizado com sucesso.')
                                                     print(' \n Leite Gasto: ', gasto_leite, 'Litros \n Leite total: ', leite_disponivel, 'Litros')
 
@@ -360,62 +360,8 @@ while menu != 0:
                                             
                                             else:
                                                 print('Opção inválida.')
-                                    elif gerenciar_leite == '3':
-                                        escolha_LDerivados = input('\n----Gerenciamento de Preços----\n 1-Leite \n 2-Derivados \n 3-Ver preços \n 0-Cancelar')
+                                                
 
-                                        if escolha_LDerivados == '1':
-                                            preco_leite = float(input('Digite o novo preço do leite: '))
-                                            print('Preço do leite atualizado com sucesso. Novo preço: R$', preco_leite)
-                                        
-                                        if escolha_LDerivados == '2':
-                                            e_derivado = input('\n Qual derivado deseja atualizar o preço? \n 1-Queijo \n 2-Iogurte \n 3-Manteiga')
-                                            
-                                            if e_derivado == '1':
-                                                print('\n---- QUEIJOS CADASTRADOS ----')
-                                                for i in range(len(derivados)):
-                                                    if derivados[i][0] == 'Queijo':
-                                                        print(f'{i+1} - {derivados[i][1]} | Preço atual: R$ {derivados[i][2]}')
-                                                escolha = int(input('Qual queijo deseja alterar o preço? '))
-                                                indice = escolha - 1
-                                                novo_preco = float(input('Digite o novo preço: R$ '))
-                                                derivados[indice][2] = novo_preco
-                                                print('Preço atualizado com sucesso.')
-
-                                            elif e_derivado == '2':
-                                                print('\n---- IOGURTE CADASTRADO ----')
-                                                for i in range(len(derivados)):
-                                                    if derivados[i][0] == 'Iogurte':
-                                                        print(f'{i+1} - {derivados[i][1]} | Preço atual: R$ {derivados[i][2]}')
-                                                escolha = int(input('Qual Iogurte deseja alterar o preço? '))
-                                                indice = escolha - 1
-                                                novo_preco = float(input('Digite o novo preço: R$ '))
-                                                derivados[indice][2] = novo_preco
-                                                print('Preço atualizado com sucesso.')   
-
-                                            elif e_derivado == '3':
-                                                print('\n---- MANTEIGA CADASTRADA ----')
-                                                for i in range(len(derivados)):
-                                                    if derivados[i][0] == 'Manteiga':
-                                                        print(f'{i+1} - {derivados[i][1]} | Preço atual: R$ {derivados[i][2]}')
-                                                escolha = int(input('Qual Manteiga deseja alterar o preço? '))
-                                                indice = escolha - 1
-                                                novo_preco = float(input('Digite o novo preço: R$ '))
-                                                derivados[indice][2] = novo_preco
-                                                print('Preço atualizado com sucesso.')    
-
-                                        elif escolha_LDerivados == '3':
-                                            print(' ---- PREÇO ATUAL DOS PRODUTOS ---- ')
-                                            
-                                            print(f'Leite: R$ {preco_leite} por litro\n')
-
-                                            print('--- Derivados ---')
-
-                                            for d in derivados:
-                                                print(f'{d[0]} {d[1]}: R$ {d[2]}')
-                                        
-                                        elif escolha_LDerivados == '0':
-                                            break                                                                                                
-                                                                                    
                                     elif gerenciar_leite == '0':
                                         break     
                                     else:
@@ -465,7 +411,7 @@ while menu != 0:
                                             continue
 
                                         quantidade = float(input('Digite a quantidade disponível: '))
-                                        preco = float(input('Digite o preço do produto: '))
+                                        preco_produto = float(input('Digite o preço do produto: '))
                                         
                                         # Verificar se o produto já existe
                                         existe = 0
@@ -476,53 +422,87 @@ while menu != 0:
                                                 existe = 1
                                                 break
                                         if existe == 0:
-                                            produtos.append([tipo_produto, animal, quantidade, preco])
+                                            produtos.append([tipo_produto, animal, quantidade, preco_produto])
                                             if animal == '':
-                                                print(str(quantidade) + ' ' + tipo_produto + ' adicionados ao estoque.')
+                                                print(str(quantidade) + ' de ' + tipo_produto + ' adicionados ao estoque.')
                                             else:
-                                                print(str(quantidade) + ' ' + tipo_produto + ' (' + animal + ') adicionados ao estoque.')
+                                                print(str(quantidade) + ' de ' + tipo_produto + ' (' + animal + ') adicionados ao estoque.')
 
                                     elif gerenciar_estoque == '2':
-                                        # Atualizar estoque
-                                        if len(produtos) == 0:
-                                            print('Nenhum produto cadastrado para atualizar.')
-                                            continue
 
                                         print('\nProdutos disponíveis:')
+
+                                        # Mostrar leite primeiro
+                                        print(f"0 - Leite: {leite_disponivel} litros | R$ {preco_leite:.2f} por litro")
+
+                                        # Mostrar produtos cadastrados
                                         for i in range(len(produtos)):
                                             if produtos[i][1] == '':
-                                                print(f"{i+1} - {produtos[i][0]}: {produtos[i][2]} Preço: R${produtos[i][3]}")
+                                                print(f"{i+1} - {produtos[i][0]}: {produtos[i][2]}")
                                             else:
-                                                print(f"{i+1} - {produtos[i][0]} ({produtos[i][1]}): {produtos[i][2]} Preço: R${produtos[i][3]}")
+                                                print(f"{i+1} - {produtos[i][0]} ({produtos[i][1]}): {produtos[i][2]} | R${produtos[i][3]}")
 
-                                        escolha = int(input('Digite o número do produto que deseja atualizar (0 para cancelar): '))
+                                        escolha = int(input('Digite o número do produto que deseja atualizar (0 = leite / -1 cancelar): '))
+
+                                        if escolha == -1:
+                                            continue
+
                                         if escolha == 0:
-                                            continue
-                                        if escolha < 1 or escolha > len(produtos):
-                                            print('Opção inválida.')
-                                            continue
 
-                                        indice = escolha - 1
-                                        acao = input('\n----Atualizar produtos----\n 1-adicionar quantidade \n 2-remover quantidade \n 3-Atualizar preço \n 0-Cancelar')
-                                        if acao == '1':
-                                            qtd = float(input('Digite a quantidade a adicionar: '))
-                                            produtos[indice][2] += qtd
-                                            print('Estoque atualizado. Nova quantidade:', produtos[indice][2],)
-                                        elif acao == '2':
-                                            qtd = float(input('Digite a quantidade a remover: '))
-                                            if qtd > produtos[indice][2]:
-                                                print('Erro: quantidade maior que o estoque disponível.')
+                                            print('\n--- Atualização do Leite ---')
+
+                                            novo_preco = float(input('Digite o novo preço por litro: R$ '))
+                                            preco_leite = novo_preco
+
+                                            acao = input('Digite 1 para adicionar litros ou 2 para remover litros: ')
+
+                                            if acao == '1':
+                                                qtd = float(input('Quantos litros deseja adicionar? '))
+                                                leite_disponivel += qtd
+                                                print('Leite atualizado com sucesso.')
+
+                                            elif acao == '2':
+                                                qtd = float(input('Quantos litros deseja remover? '))
+
+                                                if qtd > leite_disponivel:
+                                                    print('Quantidade inválida.')
+                                                else:
+                                                    leite_disponivel -= qtd
+                                                    print('Leite atualizado com sucesso.')
+
                                             else:
-                                                produtos[indice][2] -= qtd
-                                                print('Estoque atualizado. Nova quantidade:', produtos[indice][2])
-                                        elif acao == '3':
-                                            n_preco = float(input('Digite o novo preço: '))
-                                            produtos[indice][3] = n_preco
-                                            print('Preço atualizado. Novo preço: ', produtos[indice][3])
-                                        elif acao == '0':
-                                            break
+                                                print('Ação inválida.')
+
                                         else:
-                                            print('Ação inválida.')
+
+                                            if escolha < 1 or escolha > len(produtos):
+                                                print('Opção inválida.')
+                                                continue
+
+                                            indice = escolha - 1
+
+                                            acao = input('Digite 1 para adicionar quantidade ou 2 para remover quantidade: ')
+
+                                            if acao == '1':
+                                                qtd = float(input('Digite a quantidade a adicionar: '))
+                                                produtos[indice][2] += qtd
+
+                                                print('Estoque atualizado. Nova quantidade:', produtos[indice][2])
+
+                                            elif acao == '2':
+
+                                                qtd = float(input('Digite a quantidade a remover: '))
+
+                                                if qtd > produtos[indice][2]:
+                                                    print('Erro: quantidade maior que o estoque disponível.')
+
+                                                else:
+                                                    produtos[indice][2] -= qtd
+
+                                                    print('Estoque atualizado. Nova quantidade:', produtos[indice][2])
+
+                                            else:
+                                                print('Ação inválida.')
 
                                     elif gerenciar_estoque == '3':
                                         # Ver estoque
@@ -546,9 +526,9 @@ while menu != 0:
                                         else:
                                             for p in produtos:
                                                 if p[1] == '':
-                                                    print(f"{p[0]}: {p[2]} | Preço: R${p[3]}")
+                                                    print(f"{p[0]}: {p[2]}")
                                                 else:
-                                                    print(f"{p[0]} ({p[1]}): {p[2]} R${p[3]}")
+                                                    print(f"{p[0]} ({p[1]}): {p[2]}")
 
                                     elif gerenciar_estoque == '0':
                                         break
@@ -619,10 +599,7 @@ while menu != 0:
                                 break
             else:
                 print('senha invalida')
-
-
-                
-                    
+                   
         elif ml == 2:
             id = input('Digite o nome de usuario: ')
             senha = input('Digite sua senha: ')
@@ -630,125 +607,272 @@ while menu != 0:
                 i = user_c.index(id)
                 if senha == password_c[i]:
                     print(f'Bem vindo {id}')
+                    historico = []
+                    avaliaçoes = []
                     while True:
-                        menu_cliente = input('----Menu Cliente----\n 1-visulizar estoque disponivel\n2-realizar compra\n3-agendar transporte\n')
+                        menu_cliente = input('----Menu Cliente----\n 1-visulizar estoque disponivel \n 2-realizar compra\n 3-agendar transporte\n 4-historico de compra\n 5-simular frete\n')
                         if menu_cliente == '1':
-                            
-                            print('\n----- ESTOQUE DISPONÍVEL -----\n')
+                            while True:
+                                opv_estoque = input('\n ----ESTOQUE DISPONIVEL---- \n 1-Leite e derivados \n 2-Animais \n 3-Produtos \n 0-Retornar ao menu \n')
+                                if opv_estoque == '1':
+                                    print('\n----- ESTOQUE DISPONÍVEL -----\n')
+                                    print(f'Leite disponível: \n {leite_disponivel} litros | R$ {preco_leite} \n')
 
-    
-                            print('\n----Animais Disponiveis----\n')
-                            print('----BOVINOS----')
-                            encontrado = False
-                            for animal in bovinos:
-                                if animal[2] == 'venda':
-                                    print(f'ID: {animal[0]} | Status: {animal[1]}')
-                                    encontrado = True
-
-                            if encontrado == False:
-                                print('Nenhum bovino disponível')
-
-                            print('\n----SUINOS----')
-                            encontrado = False
-
-                            for animal in suinos:
-                                if animal[2] == 'venda':
-                                    print(f'ID: {animal[0]} | Status: {animal[1]}')
-                                    encontrado = True
-
-                            if encontrado == False:
-                                print('Nenhum suíno disponível')
-
-                            print('\n----AVES----')
-                            encontrado = False
-
-                            for animal in aves:
-                                if animal[2] == 'venda':
-                                    print(f'ID: {animal[0]} | Status: {animal[1]}')
-                                    encontrado = True
-
-                            if encontrado == False:
-                                print('Nenhuma ave disponível')
-
-                            print('\n----CAPRINOS----')
-                            encontrado = False
-
-                            for animal in caprino:
-                                if animal[2] == 'venda':
-                                    print(f'ID: {animal[0]} | Status: {animal[1]}')
-                                    encontrado = True
-
-                            if encontrado == False:
-                                print('Nenhum caprino disponível')
-
-                            print('\n----OVINOS----')
-                            encontrado = False
-
-                            for animal in ovino:
-                                if animal[2] == 'venda':
-                                    print(f'ID: {animal[0]} | Status: {animal[1]}')
-                                    encontrado = True
-
-                            if encontrado == False:
-                                print('Nenhum ovino disponível')
-                        elif menu_cliente == '2':
-                            compra =input('1-comprar animal\n2-comprar produtos\n')
-                            if compra == '1':
-                                compra_animal = input('que tipo de animal deseja comprar?\n1-bovino \n 2-suino \n 3-ave \n4-caprino\n5-ovino\n')
-                                quantidade_animal = int(input('quantos animais deseja comprar?\n'))
-                                dia_compra = input('data da compra: ')
-                                if compra_animal == '1':
-                                    lista = bovinos
-                                    tipo_nome = 'bovino'
-                                    preco_animal = 3500
-                                elif compra_animal == '2':
-                                    lista = suinos
-                                    preco_animal = 700
-                                    tipo_nome = 'suino'
-                                elif compra_animal == '3':
-                                    lista = aves
-                                    preco_animal = 75
-                                    tipo_nome = 'ave'
-                                elif compra_animal == '4':
-                                    lista = caprino
-                                    preco_animal = 500
-                                    tipo_nome = 'caprino'
-                                elif compra_animal == '5':
-                                    lista = ovino
-                                    preco_animal = 500
-                                    tipo_nome = 'Ovino'
-                                else:
-                                    print('tipo invalido')
-                                    continue
-                                disponiveis = []
-                                for animal in lista:
-                                    if animal[2] == 'venda':
-                                        disponiveis.append(animal)
-                                if len(disponiveis) == 0:
-                                    print(f'Nenhum {tipo_nome} disponível para venda.')
-                                elif quantidade_animal > len(disponiveis):
-                                    print('Quantidade indisponível.')
-                                else:
-                                    preco_total = preco_animal * quantidade_animal
-                                    compra_final = input(f'o preço total da compra e de R${preco_total}, deseja continuar a compra?\n1-sim\n2-nao')
-                                    if compra_final == '1':
-                                        vendidos = 0
-                                        i = 0
-                                        while i < len(lista) and vendidos < quantidade_animal:
-
-                                            if lista[i][2] == 'venda':
-                                                print(f'Animal vendido: {lista[i][0]}')
-                                                lista.pop(i)
-                                                vendidos += 1
+                                    print('DERIVADOS DISPONIVEIS: \n') 
+                                    if len(producao_derivados) == 0:
+                                        print("Nenhum derivado produzido ainda.")
+                                    else:
+                                        print("Derivados disponíveis:")
+                                        for item in producao_derivados:
+                                            if item[0] == 'Iogurte':
+                                                unidade = 'L'
                                             else:
-                                                i+1
+                                                unidade = 'kg'
+                                            print(f"{item[0]} {item[1]}: {item[2]} {unidade}")
 
-                                        saldo += preco_total
-                                        receitas.append([
-                                            f'Venda de {vendidos} {tipo_nome}(s)',preco_total,dia_compra])
-                                        print(f'{vendidos} animais vendidos.')
-                            else:
-                                break
+                                if opv_estoque == '2':
+                                    print('\n----ANIMAIS DISPONIVEIS----\n')
+                                    print('----BOVINOS----')
+                                    encontrado = False
+                                    for animal in bovinos:
+                                        if animal[2] == 'venda':
+                                            print(f'ID: {animal[0]} | Status: {animal[1]}')
+                                            encontrado = True
+
+                                    if encontrado == False:
+                                        print('Nenhum bovino disponível')
+
+                                    print('\n----SUINOS----')
+                                    encontrado = False
+
+                                    for animal in suinos:
+                                        if animal[2] == 'venda':
+                                            print(f'ID: {animal[0]} | Status: {animal[1]}')
+                                            encontrado = True
+
+                                    if encontrado == False:
+                                        print('Nenhum suíno disponível')
+
+                                    print('\n----AVES----')
+                                    encontrado = False
+
+                                    for animal in aves:
+                                        if animal[2] == 'venda':
+                                            print(f'ID: {animal[0]} | Status: {animal[1]}')
+                                            encontrado = True
+
+                                    if encontrado == False:
+                                        print('Nenhuma ave disponível')
+
+                                    print('\n----CAPRINOS----')
+                                    encontrado = False
+
+                                    for animal in caprino:
+                                        if animal[2] == 'venda':
+                                            print(f'ID: {animal[0]} | Status: {animal[1]}')
+                                            encontrado = True
+
+                                    if encontrado == False:
+                                        print('Nenhum caprino disponível')
+
+                                    print('\n----OVINOS----')
+                                    encontrado = False
+
+                                    for animal in ovino:
+                                        if animal[2] == 'venda':
+                                            print(f'ID: {animal[0]} | Status: {animal[1]}')
+                                            encontrado = True
+
+                                    if encontrado == False:
+                                        print('Nenhum ovino disponível')
+
+                                if opv_estoque == '3':
+                                    print('----PRODUTOS DISPONIVEIS----')  
+                                    if len(produtos) == 0:
+                                        print('Nenhum produto disponivel.')
+                                    else:
+                                        for i in range(len(produtos)):
+                                            if produtos[i][1] == '':
+                                                print(f'{produtos[i][0]}: {produtos[i][2]} disponíveis | R$ {produtos[i][3]}')
+                                            else:
+                                                print(f'{p[0]} ({p[1]}): {p[2]} disponíveis | R$ {p[3]}')    
+
+                                if opv_estoque == '0':
+                                    break    
+
+                        elif menu_cliente == '2':
+                            while True:
+                                compra = input(' \n ----MENU COMPRAS---- \n 1-Leite e derivados \n 2-animais \n 3-Produtos \n ')
+                                if compra == '1':
+                                    compra_lderivados = input(' \n ----O que deseja comprar? ---- \n 1-Leite \n 2-Derivados \n 0-Cancelar \n')
+                                    if compra_lderivados == '1':
+                                        print(f'Leite disponível: \n {leite_disponivel} litros | R$ {preco_leite} \n')
+                                        compra_leite = int(input('Quantos litros de leite deseja comprar? '))
+                                        if compra_leite > leite_disponivel:
+                                            print('Quantia indisponivel.')
+                                        else:    
+                                            total_cleite = compra_leite * preco_leite
+                                            leite_disponivel = leite_disponivel - compra_leite
+                                            print(f'Compra realizada com sucesso. \n Leite comprado: {compra_leite} | R${total_cleite}')
+                                            historico.append([id, 'Leite', compra_leite, total_cleite])
+                                    
+                                    elif compra_lderivados == '2':
+                                        print('DERIVADOS DISPONIVEIS: \n') 
+                                        if len(producao_derivados) == 0:
+                                            print("Nenhum derivado produzido ainda.")
+                                        else:
+                                            print("Derivados disponíveis:")
+                                            for i in range(len(producao_derivados)):
+                                                item = producao_derivados[i]
+                                                if item[0] == 'Iogurte':
+                                                    unidade = 'L'
+                                                else:
+                                                    unidade = 'kg'
+                                                print(f"({i + 1}){item[0]} {item[1]}: {item[2]} {unidade}") 
+                                        
+                                        escolha_derivado = int(input('Qual derivado deseja comprar? '))
+                                        item = producao_derivados[escolha_derivado - 1]
+
+                                        print(f"\nVocê escolheu: {item[0]} {item[1]}")
+                                        print(f"Estoque disponível: {item[2]}")
+                                        quantidade = float(input("Quantos deseja comprar? "))
+                                        if quantidade > item[2]:
+                                            print("Estoque insuficiente.")
+                                        else:
+                                            preco = item[3]
+                                            total = quantidade * preco
+                                            item[2] -= quantidade
+                                            print(f"Compra realizada com sucesso! \n Quantia comprada: {quantidade} | R${total}")
+                                            historico.append([id,f'{item[0]} {item[1]}',quantidade,total])
+                                        
+                                                                                                                                                                                     
+                                if compra == '2':
+                                    compra_animal = input('que tipo de animal deseja comprar?\n1-bovino \n 2-suino \n 3-ave \n4-caprino\n5-ovino\n')
+                                    quantidade_animal = int(input('quantos animais deseja comprar?\n'))
+                                    dia_compra = input('data da compra: ')
+                                    if compra_animal == '1':
+                                        lista = bovinos
+                                        tipo_nome = 'bovino'
+                                        preco_animal = 3500
+                                    elif compra_animal == '2':
+                                        lista = suinos
+                                        preco_animal = 700
+                                        tipo_nome = 'suino'
+                                    elif compra_animal == '3':
+                                        lista = aves
+                                        preco_animal = 75
+                                        tipo_nome = 'ave'
+                                    elif compra_animal == '4':
+                                        lista = caprino
+                                        preco_animal = 500
+                                        tipo_nome = 'caprino'
+                                    elif compra_animal == '5':
+                                        lista = ovino
+                                        preco_animal = 500
+                                        tipo_nome = 'Ovino'
+                                    else:
+                                        print('tipo invalido')
+                                        continue
+                                    disponiveis = []
+                                    for animal in lista:
+                                        if animal[2] == 'venda':
+                                            disponiveis.append(animal)
+                                    if len(disponiveis) == 0:
+                                        print(f'Nenhum {tipo_nome} disponível para venda.')
+                                    elif quantidade_animal > len(disponiveis):
+                                        print('Quantidade indisponível.')
+                                    else:
+                                        preco_total = preco_animal * quantidade_animal
+                                        compra_final = input(f'o preço total da compra e de R${preco_total}, deseja continuar a compra?\n1-sim\n2-nao')
+                                        if compra_final == '1':
+                                            vendidos = 0
+                                            i = 0
+                                            while i < len(lista) and vendidos < quantidade_animal:
+
+                                                if lista[i][2] == 'venda':
+                                                    print(f'Animal vendido: {lista[i][0]}')
+                                                    lista.pop(i)
+                                                    vendidos += 1
+                                                else:
+                                                    i += 1
+
+                                            saldo += preco_total
+                                            receitas.append([
+                                                f'Venda de {vendidos} {tipo_nome}(s)',preco_total,dia_compra])
+                                            print(f'{vendidos} animais vendidos.')
+                                            historico.append([id,tipo_nome,vendidos,preco_total])
+                                
+                                elif compra == '3':
+                                    print('----PRODUTOS DISPONIVEIS----')  
+                                    if len(produtos) == 0:
+                                        print('Nenhum produto disponivel.')
+                                    else:
+                                        for i in range(len(produtos)):
+                                            if produtos[i][1] == '':
+                                                print(f'{produtos[i][0]}: {produtos[i][2]} disponíveis | R$ {produtos[i][3]}')
+                                            else:
+                                                print(f'{produtos[i][0]} ({produtos[i][1]}): {produtos[i][2]} disponíveis | R$ {produtos[i][3]}') 
+
+                                    compra_produto = int(input('Qual produto deseja comprar? '))
+                                    if compra_produto < 1 or compra_produto > len(produtos):                                        
+                                        print('Produto indisponivel.')
+                                    else:
+                                        quantia_produto = float(input('Quanto deseja comprar? '))
+                                        produto = produtos[compra_produto - 1]
+                                        if quantia_produto < 1 or quantia_produto > produto[2]:
+                                            print('Quantia indisponivel.')
+                                        else:
+                                            produto[2] -= quantia_produto
+                                            preco_total = produto[3] * quantia_produto
+                                            print(f'Compra realizada com sucesso. \n Quantia adquirida: {quantia_produto} | R${preco_total}')
+                                            saldo += preco_total
+                                            historico.append([id,produto[0],quantia_produto,preco_total])
+                                else:
+                                    break     
+                        elif menu_cliente == '3':
+                            while True:
+                                menu_agendamento = input('\n ----AGENDAR TRANSPORTE---- \n 1-Agendar retirada \n 2-Ver agendamentos \n 3-Cancelar agendamento \n 0-Retornar ao menu \n')
+
+                                if menu_agendamento == '1':
+                                    dia_retirada = input('Informe o dia que sera feito a retirada: ')
+                                    horario_retirada = input('Informe o horario da retirada: ')
+                                    agendamentos.append([dia_retirada, horario_retirada])
+                                    print('Agendamento feito com sucesso.')
+
+                                if menu_agendamento == '2':
+                                    print('----AGENDAMENTOS EM ANDAMENTO----')
+                                    for a in range(len(agendamentos)):
+                                        print(f'dia: {agendamentos[a][0]} | horario: {agendamentos[a][1]}')
+
+                                if menu_agendamento == '3':
+                                    print('----CANCELAR AGENDAMENTO----')
+                                    if len(agendamentos) == 0:
+                                        print('Nenhum agendamento em andamento.')
+                                    else:    
+                                        for a in range(len(agendamentos)):
+                                            print(f'({a+1}) dia: {agendamentos[a][0]} | horario: {agendamentos[a][1]}')
+                                        excluir_agendamento = int(input('Digite o agendamento que deseja cancelar: '))
+                                        if excluir_agendamento < 1 or excluir_agendamento > len(agendamentos):
+                                            print('Agendamento não encontrado.')
+                                        else:
+                                            agendamentos.pop(excluir_agendamento - 1)
+                                            print('Agendamento cancelado com sucesso.')
+
+                                        if menu_agendamento == '0':
+                                            break            
+                        elif menu_cliente =='4':
+                            print('----HISTORICO DE COMPRAS----')
+                            encontrou = False
+                            for h in historico:
+                                if h[0] == id:
+                                    print(f'Produto: {h[1]}')
+                                    print(f'Quantidade: {h[2]}')
+                                    print(f'Valor total: R$ {h[3]}')
+                                    print('-------------------')
+                                    encontrou = True
+                            if encontrou == False:
+                                print('Nenhuma compra encontrada.')
+
             else:
                 print('senha invalida')
     elif menu == 2:
@@ -769,4 +893,5 @@ while menu != 0:
             else:
                 user_c.append(id)
                 password_c.append(senha)
+
 print('programa finalizado')
