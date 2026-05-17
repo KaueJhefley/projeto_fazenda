@@ -14,31 +14,31 @@ leite_disponivel = 0
 preco_leite = 0
 derivados = []
 produtos = []
-receitas = []
+receita = []
 despesas = []
 agendamentos = []
 saldo = 0
 op = -99
 index = -99
-menu = -99
+menu = '-99'
 while menu != 0:
-    menu = int(input('----MENU---- \n 1-Fazer login \n 2-Registrar \n 0-Fechar o programa \n'))
-    if menu == 1:
-        ml = int(input('1-Fazer login como ADM \n 2-fazer login como Cliente \n 0-Fechar o programa \n'))
-        if ml == 1:
+    menu = (input('----MENU---- \n 1-Fazer login \n 2-Registrar \n 0-Fechar o programa \n'))
+    if menu == '1':
+        ml = (input('1-Fazer login como ADM \n 2-fazer login como Cliente \n 0-Fechar o programa \n'))
+        if ml == '1':
             id = input('Digite o nome de usuario: ')
             senha = input('Digite sua senha: ')
             if id in user_adm:
                 i = user_adm.index(id)
                 if senha == password_adm[i]:
-                    print(f'Bem vindo ADM {id}')
-                    menu_adm = input('1-gerenciar rebanho\n 2-gerenciar produçao e derivados\n 3-gerenciamento financeiro \n 4-gerenciar maquinas\n')
+                    print(f'Bem vindo, ADM {id}')
+                    menu_adm = input('1-gerenciar rebanho\n 2-gerenciar produçao e derivados\n 3-gerenciamento financeiro\n')
                     if menu_adm == '1':
-                        op = -99
+                        op = '-99'
                         while op != '0':
                             op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover \n 5-gerenciamento de lotes \n 0-retornar ao menu \n')
                             if op == '1':
-                                tipo = input('----Que tipo de animal deseja registrar---- \n 1-bovino \n 2-suino \n 3-ave \n 4-caprino\n5-ovino')
+                                tipo = input('----Que tipo de animal deseja registrar---- \n 1-bovino \n 2-suino \n 3-ave \n 4-caprino\n5-ovino\n')
                                 if tipo == '1':
                                     lista = bovinos
                                 elif tipo == '2':
@@ -132,7 +132,7 @@ while menu != 0:
                                 if not encontrado:
                                     print('Animal não encontrado')
                             elif op == '3':
-                                atualizar = input('----Que tipo de animal deseja atualizar---- \n 1-bovino \n 2-suino \n 3-ave \n4-caprino\n5-ovino')
+                                atualizar = input('-----Que animal deseja atualizar----\n 1-bovino \n 2-suino \n 3-ave \n 4-caprino\n5-ovino\n')
                                 busca = input('Digite a identificação do animal: ')
                                 if atualizar == '1':
                                         lista = bovinos
@@ -600,7 +600,7 @@ while menu != 0:
             else:
                 print('senha invalida')
                    
-        elif ml == 2:
+        elif ml == '2':
             id = input('Digite o nome de usuario: ')
             senha = input('Digite sua senha: ')
             if id in user_c:
