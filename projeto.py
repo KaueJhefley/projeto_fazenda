@@ -412,8 +412,7 @@ while menu != 0:
 
                                         quantidade = float(input('Digite a quantidade disponível: '))
                                         preco_produto = float(input('Digite o preço do produto: '))
-                                        
-                                        # Verificar se o produto já existe
+                                    
                                         existe = 0
                                         for p in produtos:
                                             if p[0] == tipo_produto and p[1] == animal:
@@ -432,10 +431,10 @@ while menu != 0:
 
                                         print('\nProdutos disponíveis:')
 
-                                        # Mostrar leite primeiro
+                                        
                                         print(f"0 - Leite: {leite_disponivel} litros | R$ {preco_leite:.2f} por litro")
 
-                                        # Mostrar produtos cadastrados
+                                        
                                         for i in range(len(produtos)):
                                             if produtos[i][1] == '':
                                                 print(f"{i+1} - {produtos[i][0]}: {produtos[i][2]}")
@@ -505,7 +504,7 @@ while menu != 0:
                                                 print('Ação inválida.')
 
                                     elif gerenciar_estoque == '3':
-                                        # Ver estoque
+                                        
                                         print('\n--- Estoque de Leite ---')
                                         print(leite_disponivel, 'litros')
 
