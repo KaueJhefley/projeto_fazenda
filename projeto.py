@@ -875,7 +875,7 @@ while menu != 0:
             else:
                 print('senha invalida')
     elif menu == "2":
-        mr = int(input('1-Registrar como ADM \n 2-Registrar como Cliente \n 0-Fechar o programa \n'))
+        mr = input('1-Registrar como ADM \n 2-Registrar como Cliente \n 0-Fechar o programa \n')
         if mr == '1':
             id = input('Digite o nome de usuario: ')
             senha = input('Digite sua senha: ')
