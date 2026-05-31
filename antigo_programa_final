@@ -16,6 +16,7 @@ derivados = []
 produtos = []
 receitas = []
 despesas = []
+agendamentos = []
 saldo = 0
 op = -99
 index = -99
@@ -412,7 +413,6 @@ while menu != 0:
                                         quantidade = float(input('Digite a quantidade disponível: '))
                                         preco_produto = float(input('Digite o preço do produto: '))
                                         
-                                        # Verificar se o produto já existe
                                         existe = 0
                                         for p in produtos:
                                             if p[0] == tipo_produto and p[1] == animal:
@@ -431,10 +431,8 @@ while menu != 0:
 
                                         print('\nProdutos disponíveis:')
 
-                                        # Mostrar leite primeiro
                                         print(f"0 - Leite: {leite_disponivel} litros | R$ {preco_leite:.2f} por litro")
 
-                                        # Mostrar produtos cadastrados
                                         for i in range(len(produtos)):
                                             if produtos[i][1] == '':
                                                 print(f"{i+1} - {produtos[i][0]}: {produtos[i][2]}")
@@ -504,7 +502,7 @@ while menu != 0:
                                                 print('Ação inválida.')
 
                                     elif gerenciar_estoque == '3':
-                                        # Ver estoque
+
                                         print('\n--- Estoque de Leite ---')
                                         print(leite_disponivel, 'litros')
 
@@ -517,7 +515,7 @@ while menu != 0:
                                                     unidade = 'L'
                                                 else:
                                                     unidade = 'kg'
-                                                print(f"{item[0]} {item[1]}: {item[2]} {unidade}")
+                                                print(f"{item[0]} {item[1]}: { item[2]} {unidade}")
 
                                         print('\n--- Produtos do Rebanho ---')
                                         if len(produtos) == 0:
@@ -606,8 +604,10 @@ while menu != 0:
                 i = user_c.index(id)
                 if senha == password_c[i]:
                     print(f'Bem vindo {id}')
+                    historico = []
+                    avaliaçoes = []
                     while True:
-                        menu_cliente = input('----Menu Cliente----\n 1-visulizar estoque disponivel \n 2-realizar compra\n 3-agendar transporte\n')
+                        menu_cliente = input('----Menu Cliente----\n 1-visulizar estoque disponivel \n 2-realizar compra\n 3-agendar transporte\n 4-historico de compra\n')
                         if menu_cliente == '1':
                             while True:
                                 opv_estoque = input('\n ----ESTOQUE DISPONIVEL---- \n 1-Leite e derivados \n 2-Animais \n 3-Produtos \n 0-Retornar ao menu \n')
@@ -699,7 +699,7 @@ while menu != 0:
 
                         elif menu_cliente == '2':
                             while True:
-                                compra = input(' \n ----MENU COMPRAS---- \n 1-Leite e derivados \n 2-animais \n 3-Produtos \n')
+                                compra = input(' \n ----MENU COMPRAS---- \n 1-Leite e derivados \n 2-animais \n 3-Produtos \n ')
                                 if compra == '1':
                                     compra_lderivados = input(' \n ----O que deseja comprar? ---- \n 1-Leite \n 2-Derivados \n 0-Cancelar \n')
                                     if compra_lderivados == '1':
@@ -711,6 +711,7 @@ while menu != 0:
                                             total_cleite = compra_leite * preco_leite
                                             leite_disponivel = leite_disponivel - compra_leite
                                             print(f'Compra realizada com sucesso. \n Leite comprado: {compra_leite} | R${total_cleite}')
+                                            historico.append([id, 'Leite', compra_leite, total_cleite])
                                     
                                     elif compra_lderivados == '2':
                                         print('DERIVADOS DISPONIVEIS: \n') 
@@ -739,6 +740,7 @@ while menu != 0:
                                             total = quantidade * preco
                                             item[2] -= quantidade
                                             print(f"Compra realizada com sucesso! \n Quantia comprada: {quantidade} | R${total}")
+                                            historico.append([id,f'{item[0]} {item[1]}',quantidade,total])
                                         
                                                                                                                                                                                      
                                 if compra == '2':
@@ -795,6 +797,7 @@ while menu != 0:
                                             receitas.append([
                                                 f'Venda de {vendidos} {tipo_nome}(s)',preco_total,dia_compra])
                                             print(f'{vendidos} animais vendidos.')
+                                            historico.append([id,tipo_nome,vendidos,preco_total])
                                 
                                 elif compra == '3':
                                     print('----PRODUTOS DISPONIVEIS----')  
@@ -819,10 +822,54 @@ while menu != 0:
                                             produto[2] -= quantia_produto
                                             preco_total = produto[3] * quantia_produto
                                             print(f'Compra realizada com sucesso. \n Quantia adquirida: {quantia_produto} | R${preco_total}')
-                                            saldo += preco_total    
-
+                                            saldo += preco_total
+                                            historico.append([id,produto[0],quantia_produto,preco_total])
                                 else:
-                                    break                   
+                                    break     
+                        elif menu_cliente == '3':
+                            while True:
+                                menu_agendamento = input('\n ----AGENDAR TRANSPORTE---- \n 1-Agendar retirada \n 2-Ver agendamentos \n 3-Cancelar agendamento \n 0-Retornar ao menu \n')
+
+                                if menu_agendamento == '1':
+                                    dia_retirada = input('Informe o dia que sera feito a retirada: ')
+                                    horario_retirada = input('Informe o horario da retirada: ')
+                                    agendamentos.append([dia_retirada, horario_retirada])
+                                    print('Agendamento feito com sucesso.')
+
+                                if menu_agendamento == '2':
+                                    print('----AGENDAMENTOS EM ANDAMENTO----')
+                                    for a in range(len(agendamentos)):
+                                        print(f'dia: {agendamentos[a][0]} | horario: {agendamentos[a][1]}')
+
+                                if menu_agendamento == '3':
+                                    print('----CANCELAR AGENDAMENTO----')
+                                    if len(agendamentos) == 0:
+                                        print('Nenhum agendamento em andamento.')
+                                    else:    
+                                        for a in range(len(agendamentos)):
+                                            print(f'({a+1}) dia: {agendamentos[a][0]} | horario: {agendamentos[a][1]}')
+                                        excluir_agendamento = int(input('Digite o agendamento que deseja cancelar: '))
+                                        if excluir_agendamento < 1 or excluir_agendamento > len(agendamentos):
+                                            print('Agendamento não encontrado.')
+                                        else:
+                                            agendamentos.pop(excluir_agendamento - 1)
+                                            print('Agendamento cancelado com sucesso.')
+
+                                if menu_agendamento == '0':
+                                    break            
+                        elif menu_cliente =='4':
+                            print('----HISTORICO DE COMPRAS----')
+                            encontrou = False
+                            for h in historico:
+                                if h[0] == id:
+                                    print(f'Produto: {h[1]}')
+                                    print(f'Quantidade: {h[2]}')
+                                    print(f'Valor total: R$ {h[3]}')
+                                    print('-------------------')
+                                    encontrou = True
+                            if encontrou == False:
+                                print('Nenhuma compra encontrada.')
+
             else:
                 print('senha invalida')
     elif menu == 2:
