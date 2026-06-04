@@ -4,8 +4,8 @@ def registrar_maquina():
     print('----REGISTRAR MAQUINA----')
     tipo = input('Qual maquina será registrada? ')
     id = input('Qual o identificador da maquina? ')
-    status = input('Qual o status da maquina?(funcionando/manuntenção/defeito) ')
-    maquinas.append({'tipo': tipo, 'identificador': id, 'status': status})
+    status = input('Qual o status da maquina?(funcionando/manutenção/defeito) ')
+    maquinas.append({'tipo': tipo, 'identificador': id, 'status': status, 'motivo': ''})
 
 def status_maquina():
     if len(maquinas) == 0:
@@ -21,14 +21,17 @@ def status_maquina():
     if escolha < 1 or escolha > len(maquinas):
         print("Opção inválida.")
         return
-    novo_status = input("Qual o novo status da máquina?((1)funcionando/(2)manuntenção/(3)defeito) ")
+    novo_status = input("Qual o novo status da máquina?((1)funcionando/(2)manutenção/(3)defeito) ")
     if novo_status == '1':
         maquinas[escolha - 1]['status'] = 'funcionando'
         print("Status atualizado com sucesso.")
+        maquinas[escolha - 1]['motivo'] = ''
     elif novo_status == '2':
-        maquinas[escolha - 1]['status'] = 'manuntenção'
+        maquinas[escolha - 1]['status'] = 'manutenção'
     elif novo_status == '3':
         maquinas[escolha - 1]['status'] = 'defeito'
+        motivo = input("Qual o defeito da máquina? ")
+        maquinas[escolha - 1]['motivo'] = motivo
 
 def remover_maquina():
     if len(maquinas) == 0:
@@ -52,3 +55,16 @@ def remover_maquina():
         print('Ação cancelada.')
     else:
         return
+    
+def maquinas_indisponiveis():
+    if len(maquinas) == 0:
+        print("Nenhuma máquina cadastrada.")
+        return
+    print("---- MÁQUINAS INDISPONÍVEIS ----")
+    encontrou = False
+    for m in maquinas:
+        if m['status'] in ['defeito', 'manutenção']:
+            print(f"{m['tipo']} | ID: {m['identificador']} | Status: {m['status']} | Motivo: {m['motivo']}")
+            encontrou = True
+    if not encontrou:
+        print("Nenhuma máquina indisponível no momento.")    

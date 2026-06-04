@@ -4,6 +4,7 @@ leite_derivados = {
     'leite': {
         'disponivel': 0,
         'historico': [],
+        'preco': 0,
     },
     'derivados': []
 }
@@ -39,7 +40,7 @@ def registrar_derivado():
         if t['tipo'] == tipo:
             print('Esse tipo já existe para esse derivado.')
             return
-    derivado_escolhido['tipos'].append({'tipo': tipo})
+    derivado_escolhido['tipos'].append({'tipo': tipo, 'estoque': 0, 'preco': 0})
     print('Tipo de derivado registrado com sucesso.')
 
 def produzir_derivado():
@@ -86,6 +87,7 @@ def produzir_derivado():
 def estoque_LeiteDerivados():
     print(f"LEITE DISPONÍVEL: {leite_derivados['leite']['disponivel']} L\n")
 
+    i = 0
     if leite_derivados['derivados'] == []:
         print("Nenhum derivado cadastrado.")
         return
@@ -99,4 +101,6 @@ def estoque_LeiteDerivados():
                     estoque = tipo['estoque']
                 else:
                     estoque = 0
-                print(f"  - {tipo['tipo']} | Estoque: {estoque}")
+                print(f" {i+1} - {tipo['tipo']} | Estoque: {estoque}| Preço: R${tipo['preco']}")
+                i += 1
+                
