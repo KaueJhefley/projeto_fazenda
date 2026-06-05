@@ -7,19 +7,24 @@ animais = {
     'caprino': {},
     'ovino': {}
 }
-bovinos = []
-suinos = []
-aves = []
-caprino = []
-ovino = []
-producao_leite = []
-producao_derivados = []
-leite_disponivel = 0
+leite_derivados = {
+    'leite': {
+        'disponivel': 0,
+        'historico': [],
+    },
+    'derivados': []
+}
+
 preco_leite = 0
-derivados = []
-produtos = []
-receita = []
-despesas = []
+produtos = {
+    "Carne": {},
+    "Ovos": {},
+    "Lã": {},
+    "Pele": {},
+    "Banha": {}
+}
+
+financeiro = {'saldo': 0 ,'receitas': {}, 'despesas': {}}
 agendamentos = []
 saldo = 0
 op = -99
