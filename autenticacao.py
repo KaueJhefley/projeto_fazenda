@@ -1,4 +1,5 @@
 from dados import admins, clientes
+
 def login_adm():
     usuario = input('Digite o nome de usuario: ')
     senha = input('Digite sua senha: ')
@@ -13,7 +14,6 @@ def login_adm():
         print('usuario nao existente')
         return None
             
-    
 def login_cliente():
     usuario = input('Digite o nome de usuario: ')
     senha = input('Digite sua senha: ')
@@ -27,6 +27,7 @@ def login_cliente():
     else:
         print('Usuario nao encontrado')
         return None
+ 
 def registrar_adm():
     usuario = input('Digite o nome de usuario: ')
     senha = input('Digite sua senha: ')
@@ -35,12 +36,14 @@ def registrar_adm():
     else:
         admins[usuario] = senha
 
-    
-
 def registrar_cliente():
     usuario = input('Digite o nome de usuario: ')
     senha = input('Digite sua senha: ')
+
     if usuario in clientes:
         print('usuario ja existente')
     else:
-        clientes[usuario] = {'senha': senha, 'telefone': None}
+        clientes[usuario] = {
+            'senha': senha,
+            'telefone': None
+        }
