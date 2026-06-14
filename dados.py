@@ -15,7 +15,6 @@ leite_derivados = {
     'derivados': []
 }
 
-preco_leite = 0
 produtos = {
     "Carne": {},
     "Ovos": {},
@@ -27,3 +26,4 @@ produtos = {
 financeiro = {'saldo': 0 ,'receitas': {}, 'despesas': {}}
 agendamentos = []
 historico_vendas = []
+saldo = 0
