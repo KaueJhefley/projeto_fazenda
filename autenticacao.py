@@ -18,7 +18,7 @@ def login_cliente():
     usuario = input('Digite o nome de usuario: ')
     senha = input('Digite sua senha: ')
     if usuario in clientes:
-        if senha == clientes[usuario]:
+        if senha == clientes[usuario]['senha']:
             print(f'Bem vindo, {usuario}')
             return usuario
         else:
@@ -43,4 +43,4 @@ def registrar_cliente():
     if usuario in clientes:
         print('usuario ja existente')
     else:
-        clientes[usuario] = senha
+        clientes[usuario] = {'senha': senha, 'telefone': None}

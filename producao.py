@@ -1,11 +1,20 @@
 import datetime
-from dados import leite_derivados
+
+leite_derivados = {
+    'leite': {
+        'disponivel': 0,
+        'historico': [],
+        'preco': 0,
+    },
+    'derivados': []
+}
+
 def producao_leite():
-    dia_atual = datetime.date.today().strftime("%D/%m/%Y")
-    leite_produzido = int(input('Quantos litros de leite foram produzidos? '))
+    dia_atual = datetime.date.today().strftime("%d/%m/%Y")
+    leite_produzido = int(input('Quantos litros de leite foram produzidos?(numero) '))
     leite_derivados['leite']['disponivel'] += leite_produzido
     leite_derivados['leite']['historico'].append({'data': dia_atual, 'leite produzido':leite_produzido})
-    
+
 def registrar_derivado():
     if leite_derivados['derivados'] == []:
         print('Nenhum derivado disponível.')
@@ -20,7 +29,7 @@ def registrar_derivado():
     for d in leite_derivados['derivados']:
         print(f'({i+1}) - {d["derivado"]}')
         i += 1
-    escolha = int(input('Qual derivado deseja registrar? ')) - 1
+    escolha = int(input('Qual derivado deseja registrar?(numero): ')) - 1
     if escolha < 0 or escolha >= len(leite_derivados['derivados']):
         print('Opção inválida.')
         return
@@ -31,7 +40,7 @@ def registrar_derivado():
         if t['tipo'] == tipo:
             print('Esse tipo já existe para esse derivado.')
             return
-    derivado_escolhido['tipos'].append({'tipo': tipo})
+    derivado_escolhido['tipos'].append({'tipo': tipo, 'estoque': 0, 'preco': 0,'historico': []})
     print('Tipo de derivado registrado com sucesso.')
 
 def produzir_derivado():
@@ -46,7 +55,7 @@ def produzir_derivado():
         for d in leite_derivados['derivados']:
             print(f'({i+1}) - {d["derivado"]}')
             i += 1
-        escolha = int(input('Qual derivado deseja produzir? ')) - 1
+        escolha = int(input('Qual derivado deseja produzir?(numeros): ')) - 1
         if escolha < 0 or escolha >= len(leite_derivados['derivados']):
             print('Opção inválida.')
             return
@@ -73,11 +82,14 @@ def produzir_derivado():
         if 'estoque' not in tipo:
             tipo['estoque'] = 0
         tipo['estoque'] += quantidade
+        dia_atual = datetime.date.today().strftime("%d/%m/%Y")
+        tipo['historico'].append({'data': dia_atual,'produzido': quantidade,'estoque': tipo['estoque'],'leite_gasto': leite_gasto})
         print('\nProdução registrada com sucesso.')
 
 def estoque_LeiteDerivados():
-    print(f"LEITE DISPONÍVEL: {leite_derivados['leite']['disponivel']} L\n")
+    print(f"LEITE DISPONÍVEL: {leite_derivados['leite']['disponivel']} Litros\nPreço: R${leite_derivados['leite']['preco']}")
 
+    i = 0
     if leite_derivados['derivados'] == []:
         print("Nenhum derivado cadastrado.")
         return
@@ -91,4 +103,6 @@ def estoque_LeiteDerivados():
                     estoque = tipo['estoque']
                 else:
                     estoque = 0
-                print(f"  - {tipo['tipo']} | Estoque: {estoque}")
+                print(f" {i+1} - {tipo['tipo']} | Estoque: {estoque}| Preço: R${tipo['preco']}")
+                i += 1
+                

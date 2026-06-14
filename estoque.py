@@ -146,56 +146,19 @@ def registrar_produto(produtos):
                 f'adicionados ao estoque.'
             )
 
-def ver_estoque(leite_derivados, produtos):
-
-    print('\n--- Estoque de Leite ---')
-    print(leite_derivados['leite']['disponivel'], 'litros')
-
-    print('\n--- Derivados ---')
-
-    if len(leite_derivados['derivados']) == 0:
-        print('Nenhum derivado produzido.')
-
-    else:
-        for item in leite_derivados['derivados']:
-
-            if item[0] == 'Iogurte':
-                unidade = 'L'
-            else:
-                unidade = 'kg'
-
-            print(f"{item[0]} {item[1]}: {item[2]} {unidade}")
-
-    print('\n--- Produtos do Rebanho ---')
-
+def ver_estoque():
+    print('\n======= ESTOQUE GERAL =======')
+    print('\n--- LEITE E DERIVADOS ---')
+    estoque_LeiteDerivados()
+    
+    print('\n--- PRODUTOS DO REBANHO ---')
     vazio = True
-
-    # Carnes
     for animal, dados in produtos['Carne'].items():
-
         vazio = False
-
-        print(
-            f"Carne ({animal}): "
-            f"{dados['quantidade']} "
-            f"- R${dados['preco']}"
-        )
-
-    # Ovos, Lã, Pele e Banha
+        print(f'Carne ({animal}): {dados["quantidade"]} kg | R$ {dados["preco"]}')
     for tipo in ['Ovos', 'Lã', 'Pele', 'Banha']:
-
         if produtos[tipo]:
-
             vazio = False
-
-            print(
-                f"{tipo}: "
-                f"{produtos[tipo]['quantidade']} "
-                f"- R${produtos[tipo]['preco']}"
-            )
-
+            print(f'{tipo}: {produtos[tipo]["quantidade"]} | R$ {produtos[tipo]["preco"]}')
     if vazio:
-        print('Nenhum produto registrado.')
-
-
-
+        print('Nenhum produto do rebanho registrado.')

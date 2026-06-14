@@ -26,6 +26,7 @@ produtos = {
 
 financeiro = {'saldo': 0 ,'receitas': {}, 'despesas': {}}
 agendamentos = []
+historico_vendas = []
 saldo = 0
 op = -99
 index = -99
