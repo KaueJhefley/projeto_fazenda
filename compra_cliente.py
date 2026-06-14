@@ -102,15 +102,21 @@ def compra_leite_derivados(cliente_logado):
                 if derivado_escolhido['tipos'] == []:
                     print('Esse derivado não possui tipos cadastrados.')
                     return
+            tipos_disponiveis = []
             i = 0
             for t in derivado_escolhido['tipos']:
-                print(f'({i+1}) {t["tipo"]}')
-                i += 1
+                if t['preco'] > 0 and t['estoque'] > 0:
+                    print(f'({i+1}) | {t["tipo"]} | ({t["estoque"]} disponíveis)')
+                    tipos_disponiveis.append(t)
+                    i += 1
+            if len(tipos_disponiveis) == 0:
+                print('Nenhum tipo disponível para venda.')
+                return
             escolha_tipo = int(input('Qual tipo deseja escolher?(numero) ')) - 1
-            if escolha_tipo < 0 or escolha_tipo >= len(derivado_escolhido['tipos']):
+            if escolha_tipo < 0 or escolha_tipo >= len(tipos_disponiveis):
                 print('Tipo inválido.')
                 return
-            tipo = derivado_escolhido['tipos'][escolha_tipo]
+            tipo = tipos_disponiveis[escolha_tipo]
             quantidade = float(input('Quantos Kg/L deseja comprar? '))
             if quantidade <= 0 or quantidade > tipo['estoque']:
                 print('Quantia indisponivel.')
@@ -241,3 +247,34 @@ def solicitar_reembolso(cliente_logado):
                 if nome_produto == compra['produto']:
                     tipo['estoque'] += compra['quantidade']
     print('Reembolso realizado com sucesso!')
+
+def gerenciar_precos():
+    print('\n1 - Alterar preço do leite \n 2 - Alterar preço de derivado')
+    escolha = input('Escolha: ')
+    if escolha == '1':
+        print(f'Preço atual: R${leite_derivados["leite"]["preco"]}')
+        leite_derivados['leite']['preco'] = float(input('Novo preço: '))
+        print('Preço atualizado.')
+
+    elif escolha == '2':
+        i = 0
+        for derivado in leite_derivados['derivados']:
+            print(f'({i+1}) - {derivado["derivado"]}')
+            i += 1
+        escolha_derivado = int(input('Escolha o derivado: ')) - 1
+        if escolha_derivado < 0 or escolha_derivado >= len(leite_derivados['derivados']):
+            print('Opção inválida.')
+            return
+        derivado = leite_derivados['derivados'][escolha_derivado]
+        i = 0
+        for tipo in derivado['tipos']:
+            print(f'({i+1}) - {tipo["tipo"]}')
+            i += 1
+        escolha_tipo = int(input('Escolha o tipo: ')) - 1
+        if escolha_tipo < 0 or escolha_tipo >= len(derivado['tipos']):
+            print('Tipo inválido.')
+            return
+        tipo = derivado['tipos'][escolha_tipo]
+        print(f'Preço atual: R${tipo["preco"]}')
+        tipo['preco'] = float(input('Novo preço: '))
+        print('Preço atualizado.')
