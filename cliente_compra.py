@@ -320,3 +320,34 @@ def compra_produtos(usuario, produtos):
     fin['saldo'] += preco_total
     nome = f'{tipo} ({subtipo})' if subtipo else tipo
     print(f'Compra de {quantia_produto} {nome} realizada. Total: R${preco_total:.2f}')
+
+def gerenciar_precos_leitederivados():
+    print('\n1 - Alterar preço do leite \n 2 - Alterar preço de derivado')
+    escolha = input('Escolha: ')
+    if escolha == '1':
+        print(f'Preço atual: R${leite_derivados["leite"]["preco"]}')
+        leite_derivados['leite']['preco'] = float(input('Novo preço: '))
+        print('Preço atualizado.')
+
+    elif escolha == '2':
+        i = 0
+        for derivado in leite_derivados['derivados']:
+            print(f'({i+1}) - {derivado["derivado"]}')
+            i += 1
+        escolha_derivado = int(input('Escolha o derivado: ')) - 1
+        if escolha_derivado < 0 or escolha_derivado >= len(leite_derivados['derivados']):
+            print('Opção inválida.')
+            return
+        derivado = leite_derivados['derivados'][escolha_derivado]
+        i = 0
+        for tipo in derivado['tipos']:
+            print(f'({i+1}) - {tipo["tipo"]}')
+            i += 1
+        escolha_tipo = int(input('Escolha o tipo: ')) - 1
+        if escolha_tipo < 0 or escolha_tipo >= len(derivado['tipos']):
+            print('Tipo inválido.')
+            return
+        tipo = derivado['tipos'][escolha_tipo]
+        print(f'Preço atual: R${tipo["preco"]}')
+        tipo['preco'] = float(input('Novo preço: '))
+        print('Preço atualizado.')

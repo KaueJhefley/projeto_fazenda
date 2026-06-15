@@ -99,7 +99,3 @@ def gerenciar_lotes():
                 print(f'  {identificacao}: {dados}')
         else:
             print('Nenhum animal neste lote')
-
-
-
-

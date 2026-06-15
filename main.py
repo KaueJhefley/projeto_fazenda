@@ -1,107 +1,128 @@
 from autenticacao import login_adm, login_cliente, registrar_adm, registrar_cliente
 from rebanho import cadastrar_animal, buscar_animal,atualizar_animal,remover_animal,gerenciar_lotes
 from financeiro import registrar_despesas,registrar_receita,relatorio_financeiro,ver_saldo
-from producao import producao_leite,produzir_derivado,estoque_LeiteDerivados,registrar_derivado
-from estoque import atualizar_preco,registrar_produto,ver_estoque
-from dados import produtos,leite_derivados,animais
-from cliente_compra import mostrar_animais_venda, mostrar_produtos, compra_leite_derivados, compra_animal, agendar_retirada, mostrar_produtos_comprados, solicitar_reembolso,compra_produtos
-
+from producao import producao_leite,produzir_derivado,estoque_LeiteDerivados,cadastrar_tipo_derivado, cadastrar_derivado, leite_derivados
+from estoque import registrar_produto,ver_estoque
+from dados import produtos,animais,historico_vendas, leite_derivados
+from gerenciar_maquinas import registrar_maquina, status_maquina, remover_maquina, maquinas_indisponiveis
+from cliente_compra import mostrar_animais_venda, mostrar_produtos, compra_leite_derivados, compra_animal, agendar_retirada, mostrar_produtos_comprados, solicitar_reembolso,compra_produtos, gerenciar_precos_leitederivados
+from graficos import grafico_faturamento, grafico_producao_leite, grafico_vendas_leite_derivados
 
 op = -99
 index = -99
 menu = '-99'
 
-while menu != 0:
+while menu != '0':
     menu = (input('----MENU---- \n 1-Fazer login \n 2-Registrar \n 0-Fechar o programa \n'))
     if menu == '1':
         ml = (input('1-Fazer login como ADM \n 2-fazer login como Cliente \n 0-Fechar o programa \n'))
         if ml == '1':
             usuario = login_adm()
             if usuario is not None:
-                    menu_adm = input('----Menu ADM----\n1-gerenciar rebanho\n 2-gerenciar produçao e derivados\n 3-gerenciamento financeiro\n')
-                    if menu_adm == '1':
-                        op = '-99'
-                        while op != '0':
-                            op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover \n 5-gerenciamento de lotes \n 0-retornar ao menu \n')
-                            if op == '1':
-                                cadastrar_animal()
-
-                            elif op == '2':
-                                buscar_animal()
-
-                            elif op == '3':
-                                atualizar_animal()
-
-                            elif op == '4':
-                                remover_animal()
-
-                            elif op == '5':
-                                gerenciar_lotes()
-                    elif menu_adm  == '2':
-                        while True:
-                            op_produçao = input('\n ------O que deseja fazer?------ \n 1-Gerenciar leite e derivados \n 2-Gerenciar estoque geral \n 3-Verificar estoque geral \n 0-Retornar ao menu \n')
-                            if op_produçao == '1':
-                                while True:
-                                    gerenciar_leite = input('\n ---Gerenciamento leite e derivados--- \n 1-Produção de leite \n 2-Produção de derivados \n 0-Cancelar\n')
-
-                                    if gerenciar_leite == '1':
-                                       producao_leite()
-                                    
-                                    elif gerenciar_leite == '2':
-                                        while True:
-                                            gerenciar_derivados = input('\n ----Gerenciar derivados---- \n 1-Registrar derivado \n 2-Produzir derivado \n 3-Status de produção \n 0-Cancelar \n ')
-
-                                            if gerenciar_derivados == '1':
-                                                registrar_derivado()
-
-                                            elif gerenciar_derivados == '2':
-                                                produzir_derivado()
-
-                                            elif gerenciar_derivados == '3':
-                                                estoque_LeiteDerivados()
-                                            
-                                            elif gerenciar_derivados == '0':
-                                                break
-                                            
-                                            else:
-                                                print('Opção inválida.')
-                                                
-
-                                    elif gerenciar_leite == '0':
-                                        break     
-                                    else:
-                                        print('Validação Invalida')                       
+                    while True:
+                        menu_adm = input('----Menu ADM----\n 1-gerenciar rebanho\n 2-gerenciar produçao e derivados\n 3-gerenciamento financeiro\n 4-Gerenciar Maquinas \n')
                         
-                            elif op_produçao == '2':
-                                while True:
-                                    gerenciar_estoque = input('\n----Gerenciamento de estoque----\n1-Gerenciar produto do rebanho\n2-Atualizar estoque\n3-ver estoque\n0-Cancelar\n') 
-                                    if gerenciar_estoque == '1':
-                                        registrar_produto(produtos)
+                        if menu_adm == '1':
+                            op = '-99'
+                            while op != '0':
+                                op = input('------O que deseja fazer?------ \n 1-Cadastrar Animal \n 2-Buscar Animal \n 3-Atualizar Rebanho \n 4-Remover \n 5-gerenciamento de lotes \n 0-retornar ao menu \n')
+                                if op == '1':
+                                    cadastrar_animal()
+                                elif op == '2':
+                                    buscar_animal()
+                                elif op == '3':
+                                    atualizar_animal()
+                                elif op == '4':
+                                    remover_animal()
+                                elif op == '5':
+                                    gerenciar_lotes()
 
-                                    elif gerenciar_estoque == '2':
-                                        atualizar_preco()
+                        elif menu_adm  == '2':
+                            while True:
+                                op_produçao = input('\n ------O que deseja fazer?------ \n 1-Gerenciar leite e derivados \n 2-Gerenciar estoque geral \n 3-Verificar estoque geral \n 0-Retornar ao menu \n')
+                                if op_produçao == '1':
+                                    while True:
+                                        gerenciar_leite = input('\n ---Gerenciamento leite e derivados--- \n 1-Produção de leite \n 2-Produção de derivados \n 3-Grafico de vendas e produção \n 4-Gerenciar preços \n 0-Cancelar\n')
+                                        if gerenciar_leite == '1':
+                                            producao_leite()
 
-                                    else:
-                                        break
-                            elif op_produçao == '3':
-                                ver_estoque()
+                                        elif gerenciar_leite == '2':
+                                            while True:
+                                                gerenciar_derivados = input('\n ----Gerenciar derivados---- \n 1-Registrar derivado \n 2- Registrar tipo de derivado \n 3-Produzir derivado \n 4-Status de produção \n 0-Cancelar \n ')
+                                                if gerenciar_derivados == '1':
+                                                    cadastrar_derivado()
+                                                elif gerenciar_derivados == '2':
+                                                    cadastrar_tipo_derivado()
+                                                elif gerenciar_derivados == '3':
+                                                    produzir_derivado()
+                                                elif gerenciar_derivados == '4':
+                                                    estoque_LeiteDerivados()                                            
+                                                elif gerenciar_derivados == '0':
+                                                    break
+                                                else:
+                                                    print('Opção inválida.')
+
+                                        elif gerenciar_leite == '3':
+                                            graficos = input('-----GRAFICOS-----\n 1-Produção de leite \n 2-Vendas \n 3-Faturamento \n 0-Cancelar \n')
+                                            if graficos == '1':
+                                                grafico_producao_leite(leite_derivados)
+                                            elif graficos == '2':
+                                                grafico_vendas_leite_derivados(historico_vendas)
+                                            elif graficos == '3':
+                                                grafico_faturamento(historico_vendas)
+                                        elif gerenciar_leite == '4':
+                                            gerenciar_precos_leitederivados()
+                                        elif gerenciar_leite == '0':
+                                            break     
+                                        else:
+                                            print('Validação Invalida')                       
                             
-                            else:
-                                break
-                    elif menu_adm == '3':
-                        while True:
-                            financeiro = input('----Gerenciamento Financeiro---- \n 1-registrar receita \n 2-registrar despesa \n 3-ver saldo\n 4-relatorio financeiro\n 0-voltar\n')
-                            if financeiro == '1':
-                                registrar_receita()
-                            elif financeiro == '2':
-                                registrar_despesas()
-                            elif financeiro == '3':
-                                ver_saldo()
-                            elif financeiro == '4':
-                                relatorio_financeiro()
-                            else:
-                                break
-                   
+                                elif op_produçao == '2':
+                                    while True:
+                                        gerenciar_estoque = input('\n----Gerenciamento de estoque----\n 1-Gerenciar produto do rebanho\n2-Atualizar estoque\n 0-Cancelar\n') 
+                                        if gerenciar_estoque == '1':
+                                            registrar_produto(produtos)
+                                        elif gerenciar_estoque == '2':
+                                            gerenciar_precos_leitederivados()
+                                        else:
+                                            break
+                                elif op_produçao == '3':
+                                    ver_estoque()
+                                
+                                else:
+                                    break
+
+                        elif menu_adm == '3':
+                            while True:
+                                financeiro = input('----Gerenciamento Financeiro---- \n 1-registrar receita \n 2-registrar despesa \n 3-ver saldo\n 4-relatorio financeiro\n 0-voltar\n')
+                                if financeiro == '1':
+                                    registrar_receita()
+                                elif financeiro == '2':
+                                    registrar_despesas()
+                                elif financeiro == '3':
+                                    ver_saldo()
+                                elif financeiro == '4':
+                                    relatorio_financeiro()
+                                else:
+                                    break
+
+                        elif menu_adm == '4':
+                            while True:
+                                maquina = input('----GERENCIAR MAQUINAS---- \n 1-Registrar maquina \n 2-Status maquina \n 3-Remover maquina \n 4-Checar maquinas indisponiveis \n 0-Cancelar\n ')
+                                if maquina == '1':
+                                    registrar_maquina()
+                                elif maquina == '2':
+                                    status_maquina()
+                                elif maquina == '3':
+                                    remover_maquina()
+                                elif maquina == '4':
+                                    maquinas_indisponiveis()
+                                elif maquina == '0':
+                                    break
+                                else:
+                                    print('Por favor selecione uma opção valida')
+                                    continue
+
         elif ml == '2':
             usuario = login_cliente()
             if usuario is not None:

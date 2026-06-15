@@ -11,11 +11,10 @@ leite_derivados = {
     'leite': {
         'disponivel': 0,
         'historico': [],
+        'preco': 0,
     },
     'derivados': []
 }
-
-preco_leite = 0
 produtos = {
     "Carne": {},
     "Ovos": {},

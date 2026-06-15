@@ -57,7 +57,7 @@ def grafico_vendas_leite_derivados(historico_vendas):
         plt.tight_layout()
         plt.show()
 
-def grafico_faturamento_dia(historico_vendas):
+def grafico_faturamento(historico_vendas):
     if not historico_vendas:
         print("Nenhuma venda registrada.")
         return

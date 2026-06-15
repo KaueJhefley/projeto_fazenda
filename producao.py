@@ -1,13 +1,5 @@
 import datetime
-
-leite_derivados = {
-    'leite': {
-        'disponivel': 0,
-        'historico': [],
-        'preco': 0,
-    },
-    'derivados': []
-}
+from dados import leite_derivados
 
 def producao_leite():
     dia_atual = datetime.date.today().strftime("%d/%m/%Y")
@@ -15,33 +7,37 @@ def producao_leite():
     leite_derivados['leite']['disponivel'] += leite_produzido
     leite_derivados['leite']['historico'].append({'data': dia_atual, 'leite produzido':leite_produzido})
 
-def registrar_derivado():
+def cadastrar_derivado():
+    novo_derivado = input('Nome do novo derivado: ')
+    for derivado in leite_derivados['derivados']:
+        if derivado['derivado'].lower() == novo_derivado.lower():
+            print('Esse derivado já existe.')
+            return
+    leite_derivados['derivados'].append({'derivado': novo_derivado,'tipos': []})
+    print('Derivado cadastrado com sucesso.')
+
+def cadastrar_tipo_derivado():
     if leite_derivados['derivados'] == []:
-        print('Nenhum derivado disponível.')
-        escolha_Nderivado = input('Deseja adicionar um novo derivado? (s/n) ')
-        if escolha_Nderivado == 's':
-            novo = input('Qual derivado deseja adicionar? ')
-            leite_derivados['derivados'].append({'derivado': novo,'tipos': []})
-            print('Derivado adicionado com sucesso.')
+        print('Nenhum derivado cadastrado.')
         return
-    print('\n ----DERIVADOS DISPONIVEIS---- \n')
+    print('\n---- DERIVADOS DISPONÍVEIS ----\n')
     i = 0
-    for d in leite_derivados['derivados']:
-        print(f'({i+1}) - {d["derivado"]}')
+    for derivado in leite_derivados['derivados']:
+        print(f'({i+1}) - {derivado["derivado"]}')
         i += 1
-    escolha = int(input('Qual derivado deseja registrar?(numero): ')) - 1
+
+    escolha = int(input('Escolha o derivado: ')) - 1
     if escolha < 0 or escolha >= len(leite_derivados['derivados']):
         print('Opção inválida.')
         return
     derivado_escolhido = leite_derivados['derivados'][escolha]
-
-    tipo = input(f"Qual tipo de {derivado_escolhido['derivado']} deseja adicionar? ")
+    tipo = input(f'Qual tipo deseja adicionar em \n {derivado_escolhido["derivado"]}? ')
     for t in derivado_escolhido['tipos']:
-        if t['tipo'] == tipo:
-            print('Esse tipo já existe para esse derivado.')
+        if t['tipo'].lower() == tipo.lower():
+            print('Esse tipo já existe.')
             return
-    derivado_escolhido['tipos'].append({'tipo': tipo, 'estoque': 0, 'preco': 0,'historico': []})
-    print('Tipo de derivado registrado com sucesso.')
+    derivado_escolhido['tipos'].append({'tipo': tipo,'estoque': 0,'preco': 0,'historico': []})
+    print('Tipo cadastrado com sucesso.')
 
 def produzir_derivado():
     print('------PRODUÇÃO DE DERIVADOS------')
@@ -105,4 +101,3 @@ def estoque_LeiteDerivados():
                     estoque = 0
                 print(f" {i+1} - {tipo['tipo']} | Estoque: {estoque}| Preço: R${tipo['preco']}")
                 i += 1
-                

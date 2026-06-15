@@ -1,5 +1,5 @@
 from dados import financeiro
-saldo = 0
+
 
 def registrar_receita():
     descricao = input('Digite a descrição da receita: ')
